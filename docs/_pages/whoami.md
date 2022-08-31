@@ -13,4 +13,11 @@ I started learning programming when I was 12. I bought a C# book and I showed it
 
 Over time I learned C# along with other programming languages like Python, C++ and C. Then I learned some web languages such as HTML, CSS, Javascript and SQL.
 
-In the last three years I have accelerated my learning process. Now I am 21 and I can say I know quite well most of computer science topics, from cryptography to network. Lately I lived a nice experience in the CyberChallengeIT team.
+In the last three years I have accelerated my learning process. Now I am 21 and I can say I know quite well most of computer science topics, from cryptography to network. 
+
+I lived a nice experience in the CyberChallengeIT team (2019).
+
+Now I really like binary exploitation, web exploitation and code review stuff.
+
+It's time to **break** things!
+
