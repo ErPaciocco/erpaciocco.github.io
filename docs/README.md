@@ -1,2 +1,2 @@
-# Atlas-jekyll-theme
-![Preview](./atlas-normal.png)
+# erpaciocco.github.io
+My digital adventures - aka "My Website"
