@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "An useless post"
+title: "A useless post"
 tags: first useless
 category: welcome
 header:
