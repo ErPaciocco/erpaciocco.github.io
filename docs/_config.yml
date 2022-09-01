@@ -218,8 +218,7 @@ sass:
 
 
 # Outputting
-posts:
-  permalink: /:categories/:title/
+permalink: /:year/:title/
 
 paginate: 5 # amount of posts to show
 paginate_path: /page:num/
@@ -289,6 +288,7 @@ defaults:
       type: posts
     values:
       layout: single
+      classes: wide
       author_profile: true
       read_time: true
       comments: true # true

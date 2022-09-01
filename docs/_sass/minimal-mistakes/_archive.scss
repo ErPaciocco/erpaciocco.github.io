@@ -9,12 +9,12 @@
   @include breakpoint($large) {
     float: right;
     width: calc(100% - #{$right-sidebar-width-narrow});
-    padding-right: $right-sidebar-width-narrow;
+    padding-right: $left-sidebar-width;
   }
 
   @include breakpoint($x-large) {
     width: calc(100% - #{$right-sidebar-width});
-    padding-right: $right-sidebar-width;
+    padding-right: $left-sidebar-width;
   }
 }
 
@@ -170,7 +170,7 @@
   @include breakpoint($medium) {
     margin-left: 0; /* override margin*/
     margin-right: 0; /* override margin*/
-    width: span(3 of 12);
+    width: span(5 of 16);
 
     &:nth-child(2n + 1) {
       clear: none;

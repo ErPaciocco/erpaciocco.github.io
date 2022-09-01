@@ -3,6 +3,10 @@ layout: single
 title: "An useless post"
 tags: first useless
 category: welcome
+header:
+  image: /assets/images/suspense.jpg
+  caption: "Picture credit: [Wallpaper Access](https://wallpaperaccess.com/full/3807019.jpg)"
+  teaser: /assets/images/suspense.jpg
 ---
 
 This is my first post.
