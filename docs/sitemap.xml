@@ -1,0 +1,33 @@
+---
+layout: null
+---
+
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+    <url>
+        <loc>{{ site.baseurl | prepend: site.url | xml_escape }}</loc>
+        <lastmod>{{site.time | date: "%Y-%m-%d" | xml_escape }}</lastmod>
+        <priority>1</priority>
+    </url>
+    {% for page in site.pages %}
+      {% unless page.unlist %}
+        {% unless page.url contains '_posts' %}
+            {% if page.title %}
+                <url>
+                    <loc>{{ page.url | prepend: site.baseurl | prepend: site.url | xml_escape }}</loc>
+                    <lastmod>{{ site.time | date: "%Y-%m-%d" | xml_escape }}</lastmod>
+                    <priority>0.6</priority>
+                </url>
+            {% endif %}
+        {% endunless %}
+      {% endunless %}
+    {% endfor %}
+    {% for post in site.posts %}
+        {% unless page.unlist %}
+            <url>
+                <loc>{{ post.url | prepend: site.baseurl | prepend: site.url | xml_escape }}</loc>
+                <lastmod>{{ post.date | date: "%Y-%m-%d" | xml_escape }}</lastmod>
+                <priority>0.5</priority>
+            </url>
+        {% endunless %}
+    {% endfor %}
+</urlset>
