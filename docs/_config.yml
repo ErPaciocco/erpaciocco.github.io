@@ -302,6 +302,11 @@ defaults:
 tags:
   first
   useless
+  HTB
+  pwn
+  exploitation
+  flag
 
 categories:
   welcome
+  Pwn
