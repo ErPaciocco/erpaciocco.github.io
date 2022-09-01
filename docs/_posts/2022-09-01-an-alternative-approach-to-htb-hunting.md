@@ -4,9 +4,9 @@ title: "An alternative approach to HTB hunting"
 tags: HTB pwn exploitation flag
 category: Pwn
 header:
-  image: /assets/images/posts/2022-09-01-an-alternative-approach-to-htb-hunting/teaser.PNG
+  image: /assets/images/posts/2022-09-01-an-alternative-approach-to-htb-hunting/Teaser.PNG
   caption: "Picture credit: Me"
-  teaser: /assets/images/posts/2022-09-01-an-alternative-approach-to-htb-hunting/teaser.PNG
+  teaser: /assets/images/posts/2022-09-01-an-alternative-approach-to-htb-hunting/Teaser.PNG
 ---
 
 Welcome back to my first writeup published on my website.
