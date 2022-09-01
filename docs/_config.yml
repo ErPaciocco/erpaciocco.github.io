@@ -111,9 +111,6 @@ author:
   location         : "Italy"
   email            : "erpaciocco878@hotmail.it"
   links:
-    - label: "Email"
-      icon: "fas fa-fw fa-envelope-square"
-      url: "mailto:erpaciocco878@hotmail.it"
     - label: "Website"
       icon: "fas fa-fw fa-link"
       url: "https://erpaciocco.github.io"
