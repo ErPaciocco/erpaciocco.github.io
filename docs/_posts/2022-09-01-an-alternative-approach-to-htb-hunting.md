@@ -18,7 +18,7 @@ This time I need to solve the first <b style="color:red">PWN</b> challenge offer
 This challenge, reachable [here](https://app.hackthebox.com/challenges/hunting), shows up with an executable, an
 *ELF* executable. Let's analyze it to get an idea about this stuff. 
 
-> <div style="display: flex; justify-content: between"><div style="padding: 0.5rem;"><i class="far fa-sticky-note" style="color: #fab005; padding: 0.7rem; border: 4px solid #fab005; border-radius: 100%"></i></div><div style="padding: 0.5rem;"><b style="font-style: normal">Challenge title is quite often an initial hint to its resolution: we probably have to hunt for something.</b></div></div>
+> <div style="display: flex; justify-content: between; align-items: center;"><div style="padding: 0.5rem;"><i class="far fa-sticky-note" style="color: #fab005; padding: 0.7rem; border-radius: 100%"></i></div><div style="padding: 0.5rem;"><b style="font-style: normal">Challenge title is quite often an initial hint to its resolution: we probably have to hunt for something.</b></div></div>
 
 ![file hunting](/assets/images/posts/2022-09-01-an-alternative-approach-to-htb-hunting/file.PNG "file hunting")
 
@@ -54,14 +54,14 @@ Now we need a strategy to get the right address, the one which stores the flag. 
 
 Now there are two possible strategies:
 
-> <div style="display: flex; justify-content: between"><div style="padding: 0.5rem;"><i class="fas fa-lightbulb" style="color: #ffd43b; padding: 0.7rem; border: 4px solid #ffd43b; border-radius: 100%"></i></div><div style="padding: 0.5rem;"><b style="font-style: normal">When I solved it I (obviously) thought of the harder one before 😂.</b></div></div>
+> <div style="display: flex; justify-content: between; align-items: center;"><div style="padding: 0.5rem;"><i class="fas fa-lightbulb" style="color: #ffd43b; padding: 0.7rem; border-radius: 100%"></i></div><div style="padding: 0.5rem;"><b style="font-style: normal">When I solved it I (obviously) thought of the harder one before 😂.</b></div></div>
 
 - Call `access` syscall for each address until it becomes valid
 - Try each address and register a new signal handler for SEGFAULT that continues execution instead of stopping it
 
 After a lot of hard work and mind blowing thoughts to make shellcode fits in 60 bytes, this is my final ASM shellcode  that covers the 2nd case (at the time I didn't notice address range, so I guessed based on insight). First method is well explained [here](https://shakuganz.com/2021/07/14/hackthebox-hunting-write-up/). It searches for addresses from 0x**6000**0000 to 0x**ffff**0000 (knowing upper boundaries of the address I knew it would stop before the end):
 
-> <div style="display: flex; justify-content: between"><div style="padding: 0.5rem;"><i class="fas fa-lightbulb" style="color: #ffd43b; padding: 0.7rem; border: 4px solid #ffd43b; border-radius: 100%"></i></div><div style="padding: 0.5rem;"><b style="font-style: normal">It sets a custom signal handler for SISSEGV (0xb)
+> <div style="display: flex; justify-content: between; align-items: center;"><div style="padding: 0.5rem;"><i class="fas fa-lightbulb" style="color: #ffd43b; padding: 0.7rem; border-radius: 100%"></i></div><div style="padding: 0.5rem;"><b style="font-style: normal">It sets a custom signal handler for SISSEGV (0xb)
 and tries the address. It iterates this sequence of steps for every address starting from 0x60000000, until he find
 the starting characters of the flag.</b></div></div>
 
