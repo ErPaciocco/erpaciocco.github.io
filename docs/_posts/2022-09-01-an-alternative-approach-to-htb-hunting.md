@@ -11,10 +11,12 @@ header:
 
 This is my first writeup of HTB "Hunting" PWN challenge.
 
+**Digit the flag of this challenge to unlock write-up!**
+
 <html class="staticrypt-html">
 <head>
     <meta charset="utf-8">
-    <title>Protected Page</title>
+    <title>Hunting HTB - Protected Page</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
     <meta http-equiv="cache-control" content="max-age=0"/>
@@ -153,7 +155,7 @@ This is my first writeup of HTB "Hunting" PWN challenge.
             <input id="staticrypt-password"
                    type="password"
                    name="password"
-                   placeholder="Passphrase"
+                   placeholder="HTB{...}"
                    autofocus/>
 
             <label id="staticrypt-remember-label" class="staticrypt-remember hidden">
@@ -163,7 +165,7 @@ This is my first writeup of HTB "Hunting" PWN challenge.
                 Remember me
             </label>
 
-            <input type="submit" class="staticrypt-decrypt-button" value="DECRYPT"/>
+            <input type="submit" class="staticrypt-decrypt-button" value="Unlock"/>
         </form>
     </div>
 
