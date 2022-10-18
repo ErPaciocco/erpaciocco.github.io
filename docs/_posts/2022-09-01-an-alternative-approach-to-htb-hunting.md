@@ -145,7 +145,7 @@ This is my first writeup of HTB "Hunting" PWN challenge.
 <div class="staticrypt-page">
     <div class="staticrypt-form">
         <div class="staticrypt-instructions">
-            <p class="staticrypt-title">Protected Page</p>
+            <p class="staticrypt-title">Protected Page (Created with <a href="https://robinmoisson.github.io/staticrypt">StatiCrypt</a>)</p>
             <p></p>
         </div>
 
@@ -170,10 +170,6 @@ This is my first writeup of HTB "Hunting" PWN challenge.
     </div>
 
 </div>
-<footer class="staticrypt-footer">
-    <p class="pull-right">Created with <a href="https://robinmoisson.github.io/staticrypt">StatiCrypt</a></p>
-</footer>
-
 
 <script src="/assets/js/kript/kryptojs-3.1.9-1-lib.js"></script>
 
