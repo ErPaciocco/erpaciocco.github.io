@@ -4,9 +4,9 @@ title: "Uncovering the dark magic of altChunk"
 tags: altchunk docx injection
 category: Web Exploitation
 header:
-  image: /assets/images/posts/2023-01-09-uncovering-altchunk-dangers/openXML.png
+  image: /assets/images/posts/2023-01-09-uncovering-altchunk-dangers/OpenXML.png
   caption: "Picture credit: OOXML"
-  teaser: /assets/images/posts/2023-01-09-uncovering-altchunk-dangers/openXML.png
+  teaser: /assets/images/posts/2023-01-09-uncovering-altchunk-dangers/OpenXML.png
 ---
 
 New year, new post!🥳
