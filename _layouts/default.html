@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+{% include head.html %}
+
+{% vite_client_tag %}
+{% vite_javascript_tag application %}
+
+<body id="page-top" class="!bg-[#0f172a]">
+  <div id="app">
+    <v-navbar labels='{{ site.navbar | jsonify }}'></v-navbar>
+
+    {{ content }}
+
+    <v-footer></v-footer>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,150 @@
+title: ErPaciocco
+email: erpaciocco878@hotmail.it
+description: Where the true research begins...
+locale: "en-US"
+title_separator: "-"
+subtitle: "Software Developer & CyberSecurity Specialist"
+name: "ErPaciocco"
+logo: "/images/Profile.png"
+
+baseurl: ""
+url: "https://erpaciocco.github.io"
+
+author:
+  name: "ErPaciocco"
+  avatar: "/images/Profile.png" 
+  bio: "You can't connect the dots looking forward; you can only connect them looking backwards. So you have to trust that the dots will somehow connect in your future. (Steve Jobs)"
+  location: "Italy"
+  email: "erpaciocco878@hotmail.it"
+
+navbar:
+  Portfolio: "/#portfolio"
+  Advisories: "/#advisories"
+  Blog: "/blog/"
+  Whoami: "/#whoami"
+  Contacts: "/#contacts"
+
+projects: 
+  - name: ASD Iena Soccer Academy
+    description: Football Academy Website
+    url: https://ienasoccer.it
+    image: /images/portfolio/1.jpg
+    tags: Laravel,VueJS,Tailwind,SPA,PHP,MySQL
+  - name: Binary Exploitation Warmup
+    description: A PWN Playlist
+    url: https://www.youtube.com/playlist?list=PL16OI1f-TRxBlDQzOREcHECU_p0k2t3tB
+    image: /images/portfolio/2.jpg
+    tags: PWN,ROP,NOPSled,Binary,ASLR,BoF
+  - name: eXtplorer RCE - Exploit DB
+    description: Unauth RCE on eXtplorer <= 2.1.14
+    url: https://www.exploit-db.com/exploits/51067
+    image: /images/portfolio/3.jpg
+    tags: RCE,PHP,AuthBypass
+
+cves:
+  - cveid: CVE-2019-25068
+    product: REAxios
+    cvss: 6.3
+    description: Connection String Parameter Pollution
+    coauthors: NA
+    url: https://www.cve.org/CVERecord?id=CVE-2019-25068
+  - cveid: CVE-2019-25069
+    product: REAxios
+    cvss: 5.3
+    description: ASP.NET Information Disclosure
+    coauthors: NA
+    url: https://www.cve.org/CVERecord?id=CVE-2019-25068
+  - cveid: CVE-2022-31366
+    product: EVE-NG
+    cvss: 7.2
+    description: Authenticated Remote Code Execution
+    coauthors: NA
+    url: https://www.cve.org/CVERecord?id=CVE-2022-31366
+  - cveid: CVE-2022-31844
+    product: EVE-NG
+    cvss: NA
+    description: Cross-Site Scripting
+    coauthors: NA
+    url: https://www.cve.org/CVERecord?id=CVE-2022-31844
+  - cveid: CVE-2023-30350
+    product: FS S3900-24T4S
+    cvss: 8.8
+    description: Privilege Escalation
+    coauthors: Daniele Linguaglossa (dzonerzy)
+    url: https://www.cve.org/CVERecord?id=CVE-2023-30350
+  - cveid: CVE-2024-21195
+    product: Oracle BI Publisher
+    cvss: 7.6
+    description: XSLT
+    coauthors: NA
+    url: https://www.cve.org/CVERecord?id=CVE-2024-21195
+  - cveid: CVE-2025-22213
+    product: Joomla < 5.2.5 - 4.4.12
+    cvss: 7.1
+    description: Unrestricted File Upload
+    coauthors: NA
+    url: https://www.cve.org/CVERecord?id=CVE-2025-22213
+
+giscus:
+  repo_id: "R_kgDOH6a68w" # Shown during giscus setup at https://giscus.app
+  category_name: "General" # Full text name of the category
+  category_id: "DIC_kwDOH6a6884CRJra" # Shown during giscus setup at https://giscus.app
+  discussion_term: # "pathname" (default), "url", "title", "og:title"
+  reactions_enabled: # '1' for enabled (default), '0' for disabled
+  theme: # "light" (default), "dark", "dark_dimmed", "transparent_dark", "preferred_color_scheme"
+  crossorigin: "anonymous"
+
+#Google Ad Words Data from scripts code (using Google responsive options) and ad client
+data-ad-slot: 
+data-ad-client: 
+google_ad_client: 
+
+google_analytics: "G-BR7R82XNWT"
+addthis_id: 
+disqus_account: 
+
+# SEO Related
+google_site_verification: "aDWI3hZcIwHNHJm1v7imSX80lJc39VMiRg81z5KZPUg"
+
+# Build settings
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+highlighter: rouge
+permalink: pretty
+
+exclude:
+  - bin
+  - config
+  - vite.config.ts
+  - tmp
+  - Procfile.dev
+  - node_modules
+  - package-lock.json
+  - postcss.config.js
+  - tailwind.config.js
+  - package.json
+  - less
+  - Gruntfile.js
+  - README.md
+
+permalink: /:year/:title/
+
+paginate: 5 # amount of posts to show
+paginate_path: /page:num/
+
+plugins: 
+  - jekyll/vite
+  - jekyll-paginate
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-include-cache
+  - jekyll-postcss-v2
+
+postcss:
+  cache: false
+
+sass:
+  style: compressed
+  sourcemap: never

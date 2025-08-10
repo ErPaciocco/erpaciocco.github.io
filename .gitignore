@@ -1,0 +1,26 @@
+# Jekyll
+*-cache/
+.jekyll-metadata
+
+# Ruby
+.bundle/
+.ruby-version
+*.gem
+Gemfile.lock
+_site
+
+# JavaScript
+node_modules
+
+package-lock.json
+
+# Vite Ruby
+/public/vite*
+# Vite uses dotenv and suggests to ignore local-only env files. See
+# https://vitejs.dev/guide/env-and-mode.html#env-files
+*.local
+
+_trash
+exe
+bin
+Procfile.dev
