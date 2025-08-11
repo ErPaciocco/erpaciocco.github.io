@@ -134,12 +134,18 @@ exclude:
 
 permalink: /:year/:title/
 
-paginate: 5 # amount of posts to show
-paginate_path: /page:num/
+pagination:
+  enabled: true
+  per_page: 6
+  permalink: '/page/:num/'
+  title: ':title - page :num of :max'
+  limit: 0
+  sort_field: 'date'
+  sort_reverse: true
 
 plugins: 
   - jekyll/vite
-  - jekyll-paginate
+  - jekyll-paginate-v2
   - jekyll-feed
   - jekyll-sitemap
   - jekyll-include-cache
