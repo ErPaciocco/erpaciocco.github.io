@@ -5,15 +5,15 @@
                 <div class="flex flex-row justify-between items-center mt-4">
                     <div class="rubik transform hover:scale-105 transition transition-all">
                         <a href="/"
-                            class="page-scroll rubik font-black !text-[#f0f0f0] text-3xl not-underline select-none">ErPacy
+                            class="page-scroll rubik font-black text-primary-light text-3xl not-underline select-none">ErPacy
                             🧑‍💻</a>
                     </div>
                     <button type="button"
-                        class="cursor-pointer md:hidden hover:bg-[#1a2334] transition transition-colors rounded-xl p-4 transform transition transition-transform" :class="rotateStyle"><i
-                            class="fa fa-bars !text-3xl text-[#f0f0f0]" @click="open = !open; rotateButton()"></i>
+                        class="cursor-pointer md:hidden hover:bg-primary-dark transition transition-colors rounded-xl p-4 transform transition transition-transform" :class="rotateStyle"><i
+                            class="fa fa-bars !text-3xl text-primary-light" @click="open = !open; rotateButton()"></i>
                     </button>
-                    <div class="text-[#f0f0f0] flex-row flex-no-wrap items-center justify-center text-xl font-light select-none cursor-pointer hidden md:!flex">
-                        <div v-for="(v, k) in labelsDecoded" :key="k" class="p-4 transition transition-colors hover:bg-[#1a2334] rounded-xl"><a :href="v">{{ k }}</a></div>
+                    <div class="text-primary-light flex-row flex-no-wrap items-center justify-center text-xl font-light select-none cursor-pointer hidden md:!flex">
+                        <div v-for="(v, k) in labelsDecoded" :key="k" class="p-4 transition transition-colors hover:bg-primary-dark rounded-xl"><a :href="v">{{ k }}</a></div>
                     </div>
                 </div>
             </div>
@@ -21,7 +21,7 @@
                 <div class="pt-4 md:hidden" id="navbar" v-if="open">
                     <div>
                         <ul
-                            class="nav overflow-hidden navbar-nav navbar-right !text-[#f0f0f0] rubik p-4 rounded-xl bg-[#1a2334]">
+                            class="nav overflow-hidden navbar-nav navbar-right text-primary-light rubik p-4 rounded-xl bg-primary-dark">
                             <li class="my-2" v-for="(v, k) in labelsDecoded" :key="k" >
                                 <a class="page-scroll hover:bg-[#2d3b4e] transition transition-all p-2 rounded-xl"
                                     :href="v">{{ k }}</a>
@@ -55,6 +55,7 @@
 </style>
 <script lang="js" setup>
 import { computed, ref } from 'vue';
+import { Transition } from 'vue';
 
 const props = defineProps({
     labels: {

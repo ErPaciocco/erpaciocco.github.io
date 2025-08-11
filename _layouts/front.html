@@ -6,7 +6,7 @@
 {% vite_client_tag %}
 {% vite_javascript_tag application %}
 
-<body id="page-top" class="!bg-[#0f172a]">
+<body id="page-top" class="bg-background">
   <div id="app">
     <v-navbar labels='{{ site.navbar | jsonify }}'></v-navbar>
     <v-homepage projects='{{ site.projects | jsonify }}' advisories='{{ site.cves | jsonify }}'></v-homepage>

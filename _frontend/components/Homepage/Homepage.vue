@@ -63,6 +63,7 @@ import Portfolio from './Partials/Portfolio.vue'
 import Advisories from './Partials/Advisories.vue'
 import Whoami from './Partials/Whoami.vue'
 import Contacts from './Partials/Contacts.vue'
+import { Transition } from 'vue'
 
 const props = defineProps({
     projects: {

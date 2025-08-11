@@ -7,7 +7,7 @@
                     <div class="w-full flex flex-col justify-center items-center">
                         <div> <img class="rounded-xl text-center" :src="imagesMap[post['header-img']]" alt="Post Image" /></div>
                         <div class="w-full max-w-5xl">
-                            <div class="m-4 rubik text-[#f0f0f0] font-light md:text-xl text-lg">
+                            <div class="m-4 rubik text-primary-light font-light md:text-xl text-lg">
                                 <VueMarkdown :markdown="post.content" :rehype-plugins="[rehypeRaw, rehypeHighlight]"
                                     :custom-attrs="customAttrs">
                                 </VueMarkdown>
@@ -41,6 +41,7 @@ import { VueMarkdown } from '@crazydos/vue-markdown';
 import rehypeRaw from 'rehype-raw';
 import rehypeHighlight from 'rehype-highlight';
 import { ref } from 'vue';
+import { Transition } from 'vue'
 
 const images = import.meta.glob('@/images/posts/**/*.{jpg,jpeg,png,gif,webp}', { eager: true });
 
@@ -60,9 +61,9 @@ fetch('/posts.json')
     })
 
 const customAttrs = {
-    h1: { class: 'text-4xl font-bold my-4 text-[#f0f0f0]' },
-    h2: { class: 'text-3xl font-semibold my-3 text-[#f0f0f0]' },
-    h3: { class: 'text-2xl font-medium my-2 text-[#f0f0f0]' },
+    h1: { class: 'text-4xl font-bold my-4 text-primary-light' },
+    h2: { class: 'text-3xl font-semibold my-3 text-primary-light' },
+    h3: { class: 'text-2xl font-medium my-2 text-primary-light' },
     img: { class: 'rounded-lg mx-auto my-4 shadow-lg' },
     table: { class: 'table-auto w-full my-4 border-collapse border border-gray-700' },
     hr: { class: 'border-t border-gray-700 my-4' },
@@ -71,7 +72,8 @@ const customAttrs = {
     em: { class: 'italic text-gray-400' },
     figcaption: { class: 'text-sm text-gray-500 mt-2' },
     pre: { class: 'py-4 overflow-auto' },
-    code: { class: 'text-sm hljs rounded-xl wrap-break-word' }
+    code: { class: 'text-sm hljs rounded-xl wrap-break-word' },
+    blockquote: { class: 'border-l-4 border-gray-700 pl-4 italic my-8' }
 };
 
 const props = defineProps({

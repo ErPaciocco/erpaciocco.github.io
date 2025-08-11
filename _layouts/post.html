@@ -3,17 +3,17 @@ layout: default
 ---
 
 <!-- Post Header -->
-<section id="post" class="intro-header bg-primary text-center">
+<section id="post" class="intro-header text-center">
 
     <div class="m-4">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <div class="post-heading">
-                    <h1 class="text-[#f0f0f0] font-bold text-3xl select-none">{{ page.title }}</h1>
+                    <h1 class="text-primary-light font-bold text-3xl select-none">{{ page.title }}</h1>
                     {% if page.subtitle %}
-                    <h2 class="p-4 subheading hover-black text-[#f0f0f0] font-normal">{{ page.subtitle }}</h2>
+                    <h2 class="p-4 subheading hover-black text-primary-light font-normal">{{ page.subtitle }}</h2>
                     {% endif %}
-                    <p class="text-[#f0f0f0] font-light text-xl select-none">Posted by {% if page.author %}{{ page.author }}{% else %}Anonymous{% endif %}</p>
+                    <p class="text-primary-light font-light text-xl select-none">Posted by {% if page.author %}{{ page.author }}{% else %}Anonymous{% endif %}</p>
                 </div>
             </div>
         </div>

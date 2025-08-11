@@ -3,7 +3,7 @@
         <div class="w-full">
             <div class="mt-16 mb-4 pl-4 text-left">
                 <div
-                    class="flex flex-row flex-no-wrap justify-between items-center rubik text-3xl text-[#f0f0f0] font-bold">
+                    class="flex flex-row flex-no-wrap justify-between items-center rubik text-3xl text-primary-light font-bold">
                     <div class="row-span-2 w-auto">
                         <h2 class="section-heading select-none">Portfolio</h2>
                     </div>
