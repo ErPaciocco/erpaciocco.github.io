@@ -56,7 +56,7 @@
     --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     --default-font-family: var(--font-sans);
     --default-mono-font-family: var(--font-mono);
-    --color-primary-light: #b7b8b8;
+    --color-primary-light: #f0f0f0;
     --color-primary-dark: #472761;
     --color-background: #0a1530;
     --color-purple-1: #972395;
