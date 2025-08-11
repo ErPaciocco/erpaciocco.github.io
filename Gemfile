@@ -6,7 +6,7 @@ gem "jekyll", "~> 4"
 gem "webrick", "~> 1.7"
 
 group :jekyll_plugins do
-    gem "jekyll-paginate"
+    gem "jekyll-paginate-v2"
     gem "jekyll-feed"
     gem "jekyll-sitemap"
     gem "jekyll-include-cache"
