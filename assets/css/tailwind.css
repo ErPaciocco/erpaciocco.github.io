@@ -2,13 +2,13 @@
 
 @theme {
   --color-primary-light: #f0f0f0;
-  --color-primary-dark: #472761;
+  --color-primary-dark: #0e0f4a;
   --color-secondary: #761875;
   --color-background: #0a1530;
   --color-purple-1: #972395;
-  --color-purple-2: #641562;
-  --color-card-1: #9a1635;
-  --color-card-2: #4d0a1a;
+  --color-purple-2: #c035bd;
+  --color-card-1: #0e0f4a;
+  --color-card-2: #022096;
 }
 
 .rubik {

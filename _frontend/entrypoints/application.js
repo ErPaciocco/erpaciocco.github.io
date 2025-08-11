@@ -10,7 +10,7 @@ const vScrollAnimate = {
     mounted(el, binding) {
         el.classList.add('before-animate')
 
-        const threshold = binding.value?.threshold ?? 0.4
+        const threshold = binding.value?.threshold ?? 0.3
         const once = binding.value?.once ?? true
 
         const observer = new IntersectionObserver(

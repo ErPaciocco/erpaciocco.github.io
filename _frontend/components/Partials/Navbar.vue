@@ -21,7 +21,7 @@
                 <div class="pt-4 md:hidden" id="navbar" v-if="open">
                     <div>
                         <ul
-                            class="nav overflow-hidden navbar-nav navbar-right text-primary-light rubik p-4 rounded-xl bg-primary-dark">
+                            class="nav overflow-hidden navbar-nav navbar-right text-primary-light rubik p-4 rounded-xl">
                             <li class="my-2" v-for="(v, k) in labelsDecoded" :key="k" >
                                 <a class="page-scroll hover:bg-[#2d3b4e] transition transition-all p-2 rounded-xl"
                                     :href="v">{{ k }}</a>
