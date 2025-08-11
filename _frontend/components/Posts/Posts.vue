@@ -1,9 +1,9 @@
 <template>
     <div class="">
-        <div v-if="loaded" class="text-[#f0f0f0] text-2xl flex flex-row flex-wrap justify-evenly items-center w-full">
+        <div v-if="loaded" class="text-primary-light text-2xl flex flex-row flex-wrap justify-evenly items-center w-full">
             <Post v-scroll-animate v-for="post in posts" class="my-4 md:w-96 cursor-pointer transform transition transition-transform hover:scale-105" :key="post.id" :post="post" @click="goTo(post.url)" />
         </div>
-        <div v-else class="text-[#f0f0f0] text-2xl">
+        <div v-else class="text-primary-light text-2xl">
             <div class="spinner my-8"></div>
         </div>
     </div>

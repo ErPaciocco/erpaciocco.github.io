@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="p-8 rubik">
                     <div
-                        class="flex flex-row flex-wrap justify-between items-center !text-[#f0f0f0] text-2xl bg-[#1a2334] px-4 py-8 rounded-xl">
+                        class="flex flex-row flex-wrap justify-between items-center text-primary-light text-2xl bg-primary-dark px-4 py-8 rounded-xl">
                         <div class="shrink md:max-w-[30%]">
                             <div class="device-container">
                                 <div class="portrait white">
@@ -43,7 +43,8 @@
                             </div>
                             <div class="mt-16">
                                 <a
-                                    class="rounded-xl bg-linear-65 from-purple-500 to-pink-500 cursor-pointer p-4 text-[#f0f0f0] font-bold hover:from-pink-500 hover:to-purple-500 transition transition-colors duration-500 text-lg" href="#portfolio">GO
+                                    class="rounded-xl  bg-gradient-to-r bg-gradient
+                                    from-purple-1 to-purple-2 hover:from-purple-2 hover:to-purple-1  cursor-pointer p-4 text-primary-light font-bold  transition transition-colors duration-500 text-lg" href="#portfolio">GO
                                     TO MY PORTFOLIO!</a>
                             </div>
                         </div>

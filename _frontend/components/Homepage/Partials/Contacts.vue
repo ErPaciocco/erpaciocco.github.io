@@ -2,7 +2,7 @@
     <section id="contacts" class="w-full">
         <div class="my-8 pl-4 text-left">
             <div
-                class="flex flex-row flex-no-wrap justify-between items-center rubik text-3xl text-[#f0f0f0] font-bold">
+                class="flex flex-row flex-no-wrap justify-between items-center rubik text-3xl text-primary-light font-bold">
                 <div class="row-span-2 w-auto">
                     <h2 class="section-heading select-none">Contacts</h2>
                 </div>
@@ -11,24 +11,24 @@
                 </div>
             </div>
         </div>
-        <div class="text-center text-3xl rubik font-normal text-[#f0f0f0] select-none">
+        <div class="text-center text-3xl rubik font-normal text-primary-light select-none">
             I ❤️ new mates!
         </div>
         <div class="flex flex-row flex-wrap justify-evenly items-center my-8">
             <div
-                class="text-6xl md:text-[6rem] text-[#f0f0f0] font-bold cursor-pointer transform hover:scale-105 transition transition-all hover:text-blue-500" @click="goTo('https://www.facebook.com/alberto.bruscino.7')">
+                class="text-6xl md:text-[6rem] text-primary-light font-bold cursor-pointer transform hover:scale-105 transition transition-all hover:text-blue-500" @click="goTo('https://www.facebook.com/alberto.bruscino.7')">
                 <FontAwesomeIcon :icon="faFacebook" />
             </div>
             <div
-                class="text-6xl md:text-[6rem] text-[#f0f0f0] font-bold cursor-pointer transform hover:scale-105 transition transition-all hover:text-purple-500" @click="goTo('https://instagram.com/erpaciocco')">
+                class="text-6xl md:text-[6rem] text-primary-light font-bold cursor-pointer transform hover:scale-105 transition transition-all hover:text-purple-500" @click="goTo('https://instagram.com/erpaciocco')">
                 <FontAwesomeIcon :icon="faInstagram" />
             </div>
             <div
-                class="text-6xl md:text-[6rem] text-[#f0f0f0] font-bold cursor-pointer transform hover:scale-105 transition transition-all hover:text-blue-800" @click="goTo('https://linkedin.com/in/erpaciocco')">
+                class="text-6xl md:text-[6rem] text-primary-light font-bold cursor-pointer transform hover:scale-105 transition transition-all hover:text-blue-800" @click="goTo('https://linkedin.com/in/erpaciocco')">
                 <FontAwesomeIcon :icon="faLinkedin" />
             </div>
             <div
-                class="text-6xl md:text-[6rem] text-[#f0f0f0] font-bold cursor-pointer transform hover:scale-105 transition transition-all hover:text-yellow-500" @click="goTo('http://github.com/erpaciocco')">
+                class="text-6xl md:text-[6rem] text-primary-light font-bold cursor-pointer transform hover:scale-105 transition transition-all hover:text-yellow-500" @click="goTo('http://github.com/erpaciocco')">
                 <FontAwesomeIcon :icon="faGithub" />
             </div>
         </div>

@@ -1,13 +1,13 @@
 <template>
-    <section id="whoami" class="rounded-xl bg-linear-65 from-purple-500 to-pink-500 my-4 mx-4 md:mx-16 rubik flex flex-row flex-wrap justify-center items-center">
+    <section id="whoami" class="rounded-xl bg-primary-dark my-4 mx-4 md:mx-16 rubik flex flex-row flex-wrap justify-center items-center">
         <div class="max-w-64 my-2">
             <img src="/images/music.png" class="rounded-xl bg-[#f0f0f0]"></img>
         </div>
         <div class="p-4 w-full md:w-[70%]">
-            <div class="text-3xl text-[#f0f0f0] font-bold select-none my-2">
+            <div class="text-3xl text-primary-light font-bold select-none my-2">
                 Whoami 👋
             </div>
-            <div class="font-light text-lg text-[#f0f0f0]">
+            <div class="font-light text-lg text-primary-light">
                 <div class="m-1">
                     I'm a <b>Vulnerability Researcher</b> XORed with music production — blending rationality
                     and

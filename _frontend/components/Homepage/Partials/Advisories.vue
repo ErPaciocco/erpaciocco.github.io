@@ -2,7 +2,7 @@
     <section id="advisories" class="features">
         <div class="w-full">
             <div class="mt-16 mb-4 text-center">
-                <div class="w-full rubik text-3xl text-[#f0f0f0] font-bold">
+                <div class="w-full rubik text-3xl text-primary-light font-bold">
                     <div class="row-span-2 w-auto">
                         <h2 class="section-heading select-none">Advisories</h2>
                     </div>
@@ -35,7 +35,7 @@
                         <tr v-for="advisory in advisories" :key="advisory.cveid"
                             class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 border-gray-200 rubik">
                             <th scope="row"
-                                class="px-6 py-4 font-medium text-[#f0f0f0] whitespace-nowrap dark:font-bold dark:text-white select-all">
+                                class="px-6 py-4 font-medium text-primary-light whitespace-nowrap dark:font-bold dark:text-white select-all">
                                 {{ advisory.cveid }}
                             </th>
                             <td class="px-6 py-4">
