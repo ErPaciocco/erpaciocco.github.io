@@ -86,13 +86,16 @@ cves:
     url: https://www.cve.org/CVERecord?id=CVE-2025-22213
 
 giscus:
-  repo_id: "R_kgDOH6a68w" # Shown during giscus setup at https://giscus.app
-  category_name: "General" # Full text name of the category
-  category_id: "DIC_kwDOH6a6884CRJra" # Shown during giscus setup at https://giscus.app
-  discussion_term: # "pathname" (default), "url", "title", "og:title"
-  reactions_enabled: # '1' for enabled (default), '0' for disabled
-  theme: # "light" (default), "dark", "dark_dimmed", "transparent_dark", "preferred_color_scheme"
+  enabled: true
+  repo: "erpaciocco/erpaciocco.github.io"
+  repo_id: "R_kgDOPbq4sg"
+  category_name: "General"
+  category_id: "DIC_kwDOPbq4ss4CuCaq"
+  discussion_term: "pathname"
+  reactions_enabled: 1
+  theme: "dark"
   crossorigin: "anonymous"
+  loading: "lazy"
 
 #Google Ad Words Data from scripts code (using Google responsive options) and ad client
 data-ad-slot: 

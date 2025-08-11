@@ -4,6 +4,7 @@ import Footer from '../components/Partials/Footer.vue'
 import Homepage from '../components/Homepage/Homepage.vue'
 import Posts from '../components/Posts/Posts.vue'
 import PostPage from '../components/Posts/PostPage.vue'
+import Comments from '../components/Posts/Partials/Comments.vue'
 
 const vScrollAnimate = {
     mounted(el, binding) {
@@ -38,6 +39,8 @@ app.component('v-homepage', Homepage)
 app.component('v-footer', Footer)
 app.component('v-posts', Posts)
 app.component('v-post', PostPage)
+
+app.component('comments', Comments)
 
 app.directive('scroll-animate', vScrollAnimate)
 

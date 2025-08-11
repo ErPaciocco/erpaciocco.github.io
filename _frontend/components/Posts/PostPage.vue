@@ -67,7 +67,7 @@ const customAttrs = {
     img: { class: 'rounded-lg mx-auto my-4 shadow-lg' },
     table: { class: 'table-auto w-full my-4 border-collapse border border-gray-700' },
     hr: { class: 'border-t border-gray-700 my-4' },
-    a: { class: 'text-blue-500 hover:underline' },
+    a: { class: 'text-blue-500 hover:underline wrap-break-word' },
     strong: { class: 'font-bold text-orange-300' },
     em: { class: 'italic text-gray-400' },
     figcaption: { class: 'text-sm text-gray-500 mt-2' },
