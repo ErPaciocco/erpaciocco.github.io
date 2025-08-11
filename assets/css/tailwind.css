@@ -14,3 +14,23 @@
 .rubik {
     font-family: 'Rubik', sans-serif;
 }
+
+.section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Stato iniziale */
+.before-animate {
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+/* Stato animato */
+.animate {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.8s ease;
+}

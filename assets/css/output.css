@@ -382,9 +382,6 @@
   .cursor-pointer {
     cursor: pointer;
   }
-  .resize {
-    resize: both;
-  }
   .flex-col {
     flex-direction: column;
   }
@@ -946,6 +943,22 @@
 }
 .rubik {
   font-family: 'Rubik', sans-serif;
+}
+
+.section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.before-animate {
+  opacity: 0;
+  transform: translateY(-20px);
+}
+.animate {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.8s ease;
 }
 @property --tw-rotate-x {
   syntax: "*";
