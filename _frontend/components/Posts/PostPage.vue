@@ -13,7 +13,7 @@
                                 </VueMarkdown>
                             </div>
                             <div class="w-full">
-                                <div class="pager flex flex-row justify-between items-center">
+                                <div class="pager flex flex-row justify-evenly items-center">
                                     <div class="previous dark:text-blue-500 rubik text-3xl" v-if="previous">
                                         <a :href="previous" data-toggle="tooltip" data-placement="top">
                                             <FontAwesomeIcon :icon="faArrowCircleLeft" />
@@ -64,13 +64,13 @@ const customAttrs = {
     h1: { class: 'text-4xl font-bold my-4 text-primary-light' },
     h2: { class: 'text-3xl font-semibold my-3 text-primary-light' },
     h3: { class: 'text-2xl font-medium my-2 text-primary-light' },
-    img: { class: 'rounded-lg mx-auto my-4 shadow-lg' },
+    img: { class: 'rounded-lg mx-auto mt-4 shadow-lg' },
     table: { class: 'table-auto w-full my-4 border-collapse border border-gray-700' },
     hr: { class: 'border-t border-gray-700 my-4' },
     a: { class: 'text-blue-500 hover:underline wrap-break-word' },
     strong: { class: 'font-bold text-orange-300' },
     em: { class: 'italic text-gray-400' },
-    figcaption: { class: 'text-sm text-gray-500 mt-2' },
+    figcaption: { class: 'text-sm text-gray-500 mb-4' },
     pre: { class: 'py-4 overflow-auto' },
     code: { class: 'text-sm hljs rounded-xl wrap-break-word' },
     blockquote: { class: 'border-l-4 border-gray-700 pl-4 italic my-8' }

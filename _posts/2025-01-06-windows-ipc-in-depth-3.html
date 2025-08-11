@@ -20,8 +20,6 @@ Now that we have seen DDE technology, we will have noticed some of its limitatio
 <div><span style="font-size:20px">4.</span> <span style="font-weight: light">DDE is limited to the <i style="color: lightgreen">exchange of strings and raw data</i>, COM is based on an <b style="color: orange">object-oriented model</b>, with features such as <b style="color: orange">polymorphism, inheritance, and code reuse</b>.</span></div>
 </div>
 
----
-
 In general, COM, now widely used in the Windows ecosystem, is considered more secure, efficient and versatile than the deprecated DDE.
 
 Let's see how it works!
@@ -65,8 +63,6 @@ This IUnknown interface exposes three methods, which are fundamental to the life
          alt="IUnknown Interface">
     <figcaption>IUnknown Interface Methods</figcaption>
 </figure>
-
----
 
 > <div style="display: table"><div style="display: table-cell; width: 10%; vertical-align: middle; text-align: center; padding-right: 10px"><div class="w-8 h-8 rounded-full" style="background-color: #50c878; font-size: 3.5em"></div> </div><div style="font-weight: 300; width: 90%; display: table-cell; vertical-align: middle; text-align: left;"><span class="rubik" style="font-weight: 300;">COM uses an object lifecycle management method called <b>Reference Counting</b>. Once an object is instantiated, its counter is initialized to 1. Each copy of this object increments its counter by 1, and each of its Releases decrements it by 1. When the counter reaches 0, the object is automatically finalized.</span></div></div>
 
@@ -187,11 +183,7 @@ Let me explain step by step:
 5. Calls the **GetDisplayName** method of IShellItem and displays a MessageBox
 6. Call **CoUninitialize** to finalize the COM library.
 
----
-
 > <div style="display: table"><div style="display: table-cell; width: 10%; vertical-align: middle; text-align: center; padding-right: 10px"><i class="fa-solid fa-lightbulb" style="color: #ffd740; font-size: 4em"></i> </div><div style="font-weight: 300; width: 90%; display: table-cell; vertical-align: middle; text-align: left;"><span class="rubik" style="font-weight: 300;">Recall that every COM resource and pointer should always be freed when no longer used, either by <i>Release</i> or <i>CoTaskMemFree</i>. CoTaskMemFree represents a sort of wrapper for <i>free</i> and <i>delete</i> operations, since COM was born to be “language-agnostic.”</span></div></div>
-
----
 
 ### COM & Registry Editor
 
