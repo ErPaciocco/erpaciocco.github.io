@@ -72,6 +72,12 @@ cves:
     description: Privilege Escalation
     coauthors: Daniele Linguaglossa (dzonerzy)
     url: https://www.cve.org/CVERecord?id=CVE-2023-30350
+  - cveid: CVE-2023-36009
+    product: Microsoft Office
+    cvss: 5.5
+    description: Information Disclosure
+    coauthors: NA
+    url: https://www.cve.org/CVERecord?id=CVE-2023-36009
   - cveid: CVE-2024-21195
     product: Oracle BI Publisher
     cvss: 7.6
