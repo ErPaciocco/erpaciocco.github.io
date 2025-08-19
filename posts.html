@@ -5,11 +5,11 @@ pagination:
   permalink: ''
   enabled: true
   extension: .json
-  indexpage: ':num'
+  indexpage: ':num/index'
 ---
 
 {
-  "pages": [{% for post in paginator.posts %}
+  "content": [{% for post in paginator.posts %}
     {% if forloop.first != true %},{% endif %}
     
       {{ post | jsonify }}

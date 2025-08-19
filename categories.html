@@ -1,0 +1,20 @@
+---
+layout: null
+permalink: /categories.json
+---
+
+{
+  "content": [
+    {% assign all_categories = "" | split: "" %}
+    {% for post in site.posts %}
+      {% for category in post.categories %}
+        {% unless all_categories contains category %}
+          {% assign all_categories = all_categories | push: category %}
+        {% endunless %}
+      {% endfor %}
+    {% endfor %}
+    {% for category in all_categories %}
+      "{{ category }}"{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+  ]
+}

@@ -57,7 +57,7 @@ const post = ref({});
 fetch('/posts.json')
     .then(r => r.json())
     .then(data => {
-        post.value = data.filter(p => p.id === props.id)[0];
+        post.value = data.content.filter(p => p.id === props.id)[0];
     })
 
 const customAttrs = {

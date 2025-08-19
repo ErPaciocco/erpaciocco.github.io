@@ -9,8 +9,8 @@
                             🧑‍💻</a>
                     </div>
                     <button type="button"
-                        class="cursor-pointer md:hidden hover:bg-primary-dark transition transition-colors rounded-xl p-4 transform transition transition-transform" :class="rotateStyle"><i
-                            class="fa fa-bars !text-3xl text-primary-light" @click="open = !open; rotateButton()"></i>
+                        class="cursor-pointer md:hidden hover:bg-primary-dark transition transition-colors rounded-xl p-4 transform transition transition-transform" :class="rotateStyle">
+                        <FontAwesomeIcon :icon="faBars" class="!text-3xl text-primary-light" @click="open = !open; rotateButton()" />
                     </button>
                     <div class="text-primary-light flex-row flex-no-wrap items-center justify-center text-xl font-light select-none cursor-pointer hidden md:!flex">
                         <div v-for="(v, k) in labelsDecoded" :key="k" class="p-4 transition transition-colors hover:bg-primary-dark rounded-xl"><a :href="v">{{ k }}</a></div>
@@ -56,6 +56,8 @@
 <script lang="js" setup>
 import { computed, ref } from 'vue';
 import { Transition } from 'vue';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 
 const props = defineProps({
     labels: {
