@@ -90,7 +90,13 @@ cves:
     description: Unrestricted File Upload
     coauthors: NA
     url: https://www.cve.org/CVERecord?id=CVE-2025-22213
-
+  - cveid: CVE-2025-62552
+    product: Microsoft Access
+    cvss: 7.8
+    description: Microsoft Access Remote Code Execution
+    coauthors: NA
+    url: https://msrc.microsoft.com/update-guide/en-us/advisory/CVE-2025-62552
+    
 giscus:
   enabled: true
   repo: "erpaciocco/erpaciocco.github.io"
