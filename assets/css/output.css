@@ -633,9 +633,6 @@
   .wrap-break-word {
     overflow-wrap: break-word;
   }
-  .break-all {
-    word-break: break-all;
-  }
   .whitespace-nowrap {
     white-space: nowrap;
   }
@@ -1017,6 +1014,9 @@
   opacity: 1;
   transform: translateY(0);
   transition: all 0.8s ease;
+}
+code, a {
+  word-break: break-all;
 }
 @property --tw-rotate-x {
   syntax: "*";

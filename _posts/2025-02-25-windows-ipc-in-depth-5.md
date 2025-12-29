@@ -11,7 +11,7 @@ color: blue
 
 Now that we have seen quite a bit of theory about the COM world and OLE objects, let's put this into practice. The best way, in my opinion, to consolidate knowledge is through, in this case, the development of C++ software that makes use of these technologies.
 
-# COM#1: Hello World
+### COM#1: Hello World
 
 Let's create an application that initializes a COM object whose custom interface `IGreetings`, once the `Meet` method is called, prints "Hello World!" on the screen.
 
@@ -154,7 +154,7 @@ As you can see it is just a wrapper of `Greetings pObj = new Greetings()`, which
 
 ---
 
-# COM#2: A realistic example
+### COM#2: A realistic example
 
 A realistic example of how versatile and useful the COM world is: we retrieve a registered COM object, related to `MSXML2.XMLHTTP` (the related file is in *C:\Windows\System32\msxml6.dll*, so understand that we need an *INPROC_SERVER*), and call a method exposed by one of its interfaces `IXMLHTTPRequest` to make a GET request to a remote server.
 
@@ -247,7 +247,7 @@ Worth mentioning are only:
 
 ---
 
-# Brief Low-Level overview of COM#1
+### Brief Low-Level overview of COM#1
 
 I could take you step by step through debugging the code in the first example, but if you are here I think you will find it more interesting to know how *inheritance* and *polymorphism* is implemented in memory in C++ compilers and, in a very similar way, in COM.
 
@@ -290,13 +290,13 @@ How are **vpointer**, **vtable** and **methods** placed in the memory layout?
 
 ---
 
-# Conclusion
+### Conclusion
 In this blog post we explored the COM world with a practical approach.
 In the next one we will analyze an **OLE object**!
 
 ---
 
-# References
+#### References
 1. [https://guihao-liang.github.io/2020/05/30/what-is-vtable-in-cpp](https://guihao-liang.github.io/2020/05/30/what-is-vtable-in-cpp)
 2. [https://pabloariasal.github.io/2017/06/10/understanding-virtual-tables/](https://pabloariasal.github.io/2017/06/10/understanding-virtual-tables/)
 3. [https://www.codeproject.com/Articles/96/Beginners-Tutorial-COM-ATL-Simple-Project](https://www.codeproject.com/Articles/96/Beginners-Tutorial-COM-ATL-Simple-Project)

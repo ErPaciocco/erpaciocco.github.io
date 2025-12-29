@@ -26,8 +26,8 @@ Let's see how it works!
 
 ---
 
-# COM
-### Introduction
+### COM
+#### Introduction
 
 Let's read the official MSDN documentation first, then I will give you my own definition:
 
@@ -42,7 +42,7 @@ Simply put, COM provides a **standard** (component-based) way to *write code tha
     <figcaption>COM Component Virtual Table Structure</figcaption>
 </figure>
 
-### Foundamental Notions
+#### Foundamental Notions
 
 Let's begin by saying that each COM component provides a service. A COM component practically, as we shall see, is nothing more than a DLL or EXE that implements COM interfaces.
 Each COM component derives (and must derive) from a base interface called `IUnknown`, along with one or more other interfaces. For example, the COM object *“Common Item Dialog”* cascades all the methods and properties of the interfaces from which it is derived, as shown in the figure below.
@@ -70,7 +70,7 @@ This IUnknown interface exposes three methods, which are fundamental to the life
 
 `AddRef` is called when *another COM component uses the interface*; `Release` is called when *this component should no longer use the interface*; `QueryInterface` allows *runtime discovery of other interfaces supported by the COM object*. If the interface exists, QueryInterface returns a pointer to its vft; if it does not exist it returns an error code.
 
-### CLSID and ProgID
+#### CLSID and ProgID
 
 Each COM object has assigned a unique GUID called **CLSID**, and a “text” version of it called **ProgID**, which we will see is especially useful in DCOM calls. Each of these is registered in Windows in registry keys in `HKEY_CLASSES_ROOT\CLSID` (`HKLM\Software\CLSID` or `HKCU\Software\Classes\CLSID`).
 
@@ -80,8 +80,8 @@ Each COM object has assigned a unique GUID called **CLSID**, and a “text” ve
     <figcaption>Word.Application ProgID</figcaption>
 </figure>
 
-# COM: DEVELOPER NOTES
-### COM Server Types
+### COM: DEVELOPER NOTES
+#### COM Server Types
 
 COM uses a **client-server** model, where there is a client COM (which can be a compiled application, scripts, VBA code, etc.) and a COM Server, which can be:
 
@@ -96,14 +96,14 @@ COM uses a **client-server** model, where there is a client COM (which can be a 
 </div>
 
 
-### COM Apartments
+#### COM Apartments
 
 In addition, all COM objects are divided into groups called <b>“apartments”</b>. There are two types of apartments in COM:
 1. <b>Single-Threaded Apartment (STA)</b>: each COM object residing in an STA can be used only by the thread with which it is associated. If another thread wants to access an object in an STA, COM uses “marshalling” to send the request to the correct thread. Windows message loop is used to read and execute requests one at a time.
 2. <b>Multi-Threaded Apartment (MTA)</b>: is used for COM objects designed to have multiple concurrent accesses from different threads. Objects in an MTA must be thread-safe. Any thread can access them directly without marshalling.
 Each COM object belongs to exactly one apartment.
 
-### Some of the most used COM Interfaces
+#### Some of the most used COM Interfaces
 
 <div style="line-height:1.6; font-size: 16px">
 
@@ -123,7 +123,7 @@ Each COM object belongs to exactly one apartment.
 <span style="font-size:13px; color: yellow">#</span><b style="color: orange; font-size: 18px">IMoniker</b>: allows referencing and then linking other COM objects.<br>
 </div>
 
-### Example of a COM Interface in C++
+#### Example of a COM Interface in C++
 Let's take an official example from Microsoft documentation:<br>
 [https://learn.microsoft.com/en-us/windows/win32/learnwin32/example--the-open-dialog-box](https://learn.microsoft.com/en-us/windows/win32/learnwin32/example--the-open-dialog-box)
 
@@ -185,7 +185,7 @@ Let me explain step by step:
 
 > <div style="display: table"><div style="display: table-cell; width: 10%; vertical-align: middle; text-align: center; padding-right: 10px"><i class="fa-solid fa-lightbulb" style="color: #ffd740; font-size: 4em"></i> </div><div style="font-weight: 300; width: 90%; display: table-cell; vertical-align: middle; text-align: left;"><span class="rubik" style="font-weight: 300;">Recall that every COM resource and pointer should always be freed when no longer used, either by <i>Release</i> or <i>CoTaskMemFree</i>. CoTaskMemFree represents a sort of wrapper for <i>free</i> and <i>delete</i> operations, since COM was born to be “language-agnostic.”</span></div></div>
 
-### COM & Registry Editor
+#### COM & Registry Editor
 
 Each COM object and interface, i.e., each CLSID and ProgID and their respective IIDs are all maintained in the Windows registry, as the images below demonstrate.
 
@@ -231,11 +231,11 @@ A **“type library”** (.tlb) is a binary file that stores information about a
 
 ---
 
-# TOOLS
+### TOOLS
 
 [OleViewDotNet v1.16](https://www.powershellgallery.com/packages/OleViewDotNet/1.16)
 
-# REFERENCES
+### REFERENCES
 [https://learn.microsoft.com/it-it/windows/win32/learnwin32/error-handling-in-com](https://learn.microsoft.com/it-it/windows/win32/learnwin32/error-handling-in-com)<br>
 Error handling in COM: gives an idea of COM error codes.<br>
 [https://learn.microsoft.com/it-it/windows/win32/learnwin32/module-2--using-com-in-your-windows-program](https://learn.microsoft.com/it-it/windows/win32/learnwin32/module-2--using-com-in-your-windows-program)<br>

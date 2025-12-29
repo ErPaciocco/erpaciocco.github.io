@@ -11,7 +11,7 @@ color: blue
 
 In the previous post we introduced COM technology, of which I will make a very brief summary to keep in memory the most relevant details.
 
-# COM: Recap
+### COM: Recap
 
 **COM allows methods and properties to be represented in memory in a “standard” way**, so that developers of different languages (and consequently different applications) can, by adapting to this standard, call functions and obtain property values. All in an **OOP fashion**: in fact, it uses inheritance applied to interfaces and “virtual function tables”.
 
@@ -40,7 +40,7 @@ Windows has awareness of registered COM objects via the registry: `HKLM\Software
 
 ---
 
-# OLE
+### OLE
 
 **OLE is a proprietary Microsoft technology that allows the embedding and linking of documents and other objects.**
 You know when, in Microsoft Word, you add an object, which can be an Excel Worksheet or a Bitmap, into the open document, and you can edit or copy it just by clicking on it? There, the magic behind it is all from OLE.
@@ -77,7 +77,7 @@ Now that we are clear on these concepts, let us turn to the division between Emb
 
 An OLE object can also be edited through a sub-window of the Container window, without opening a new window (as happens when editing an Excel spreadsheet within a Word document). This behavior is known as **In-Place Activation**.
 
-### Storage OLE
+#### Storage OLE
 
 Each OLE object has its own representation (which is similar to a mini filesystem inside Windows, with folders, called **Storage**, and files, called **Streams**) on disk, in the form of CFB files, and in memory, via method calls to the `IStorage` and `IPersistStorage` interfaces.
 We can see examples of CFB files by opening a .docx as an archive:
@@ -100,7 +100,7 @@ We can see examples of CFB files by opening a .docx as an archive:
     <figcaption>OLE CFB content extracted by 7zip</figcaption>
 </figure>
 
-### OLE Functions
+#### OLE Functions
 
 Now, let's imagine that we need to develop a container application and a server application, to communicate via OLE objects.
 We will need the `IStorage` and `IPersistStorage` interfaces to **write changes to the OLE object** in memory, but also **to read its data** in order to represent it later. Specifically for `IStorage`:
@@ -171,14 +171,14 @@ The `IAdviseSink` interface is implemented by the container, and **its methods a
 </div>
 
 
-### CFB format.
+#### CFB format.
 If you would like a more in-depth discussion of the Microsoft format for storing OLE objects on disk, please write it in the comments and I will be happy to accommodate you.
 I am sending you a link to download the documentation for this format:
 [MS-OLEDS Page](https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-oleds/85583d21-c1cf-4afe-a35f-d6701c5fbb6f)
 
 ---
 
-# CONCLUSION
+### CONCLUSION
 We have seen how there is a world behind the term OLE. Do an experiment: with APIMonitor, try to see how many OLE/COM calls are made when, for example, you create or modify an object: you will find matches with the theory we have learned so far.
 
 *What can we say...see you next time!*

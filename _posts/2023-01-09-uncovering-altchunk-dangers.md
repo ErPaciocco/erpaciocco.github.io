@@ -32,7 +32,7 @@ Reference documentation states this:
 embedded directly in a WordprocessingML document in order to allow that content to be migrated to the 
 WordprocessingML format.
 
-### Embedding altChunk into a regular DOCX file
+#### Embedding altChunk into a regular DOCX file
 
 I wrote a simple C# program that embeds a choosen HTML/MHTML file into a DOCX:
 
@@ -77,7 +77,7 @@ namespace Conversion
 }
 </code></pre>
 
-### A Penetration Tester perspective
+#### A Penetration Tester perspective
 
 Even if *altChunk* simplifies a lot document creation, it can be misused
 by an attacker. In fact it allows us to write HTML code that will be converted
@@ -94,7 +94,7 @@ up to
 
 Let's dive into a real world example...
 
-### Aspose.Words and altChunks
+#### Aspose.Words and altChunks
 
 Let's suppose we have an application that converts any DOCX file to PDF.
 Inspecting its behaviour we notice that we can't trigger anything harmful

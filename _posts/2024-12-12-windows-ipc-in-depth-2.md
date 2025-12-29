@@ -12,8 +12,8 @@ color: blue
 Here we are back in the second episode of our journey into __Windows IPCs__.
 Today we are going to talk about *the main mechanisms put in place by various OSs to achieve “IPC”, “Inter-Process Communication”*.
 
-# IPC FOUNDATIONS
-### Examples
+### IPC FOUNDATIONS
+#### Examples
 Very common in any OS is the need to exchange data between different applications and coordinate behaviors based on this. Here are some examples:
 
 <div class="my-4">
@@ -40,7 +40,7 @@ Very common in any OS is the need to exchange data between different application
 
 > <div style="display: table"><div style="display: table-cell; width: 10%; vertical-align: middle; text-align: center; padding-right: 10px"><div class="w-8 h-8 rounded-full" style="background-color: #50c878; font-size: 3.5em"></div> </div><div style="font-weight: 300; width: 90%; display: table-cell; vertical-align: middle; text-align: left;"><span class="rubik" style="font-weight: 300;">GNOME/KDE and X11 are at different levels in the architecture of a graphical system: <br><br><span style="font-weight:200">- <span style="color: orange"><b>GNOME</b>/<b>KDE</b></span> are <span style="color: orange">desktop environments</span>, that is, they provide facilities for an easy and intuitive desktop experience, such as window management and graphical effects;<br>- <span style="color: orange"><b>X11</b></span> is a <span style="color: orange">graphics server</span> that interfaces with hardware for basic graphics operations.</span></span></div></div>
 
-### Types
+#### Types
 
 This non-exhaustive list highlights the most common OS mechanisms for IPC:
 
@@ -57,13 +57,13 @@ Examples are: `SIGABRT`, `SIGSEGV`, `SIGHUP`, `SIGBUS`, `SIGKILL`, etc.
 
 <span style="font-size:13px; color: orange">#</span> <b style="color: yellow">Clipboard</b><br>These are a __very weakly coupled medium of exchange__ found in Windows and POSIX, meaning that the application “copying” the data chooses the format of it itself, and the receiver must accept and interpret it.
 
-# DDE
+### DDE
 
 In this scenario is located Microsoft's DDE technology: <b style="color: yellow">Dynamic Data Exchange</b>.
 
 DDE provides a way to *send data between applications*, *using both the Windows Message Queues* mechanism we saw earlier *and shared memory*, according to a specific protocol (DDE Protocol). Since it has a message-based architecture, __DDE conversations can only take place between windows__, whether visible or hidden.
 
-### Overview
+#### Overview
 
 DDE uses a hierarchy of 3 names to retrieve as much specific information as possible: __SERVICE__, __TOPIC__, and __ITEM__. At the beginning of a conversation, the DDE client sends a broadcast message to all windows containing the “service/topic” pair (also called CHANNEL) about which it wants information. The first window (called __SERVER__) that accepts establishes a connection with the client.
 
@@ -95,7 +95,7 @@ DDE messages, once the connection is established, can be:
  - <span class="rubik" style="font-weight: 200;">The names SERVICE, TOPIC and ITEM are <b>case-insensitive</b> because they use instances of Global String Atoms.</span><br>
 - <span class="rubik" style="font-weight: 200;">A <b>DDE server can also act as a client</b> in the same conversation, and a DDE client can likewise act as a server</span><br></span></div></div>
 
-### Theoretical Example
+#### Theoretical Example
 
 One scenario in which DDE can be useful is when a Microsoft Excel sheet wants to constantly update the data in one of its tables. Let's say we have a “Players” sheet with a table containing some of the most famous soccer players with the number of goals scored next to it. To keep this table constantly updated, we can take advantage of a DDE conversation between a client (our Excel) and a server (e.g., a local program named “Statistics” containing all the updated statistics).
 
@@ -116,7 +116,7 @@ Here is an example flow:
 
 ---
 
-### Practical Example: DDE + PYTHON + ACCESS
+#### Practical Example: DDE + PYTHON + ACCESS
 
 For this practical example we will use the features of *PyWin32*, which, among other things, supports the creation and management of DDE conversations, to interact with Microsoft Access.
 
@@ -184,7 +184,7 @@ For a more detailed understanding of the DDE message flow with related implement
     <figcaption>API Monitor v2 showing us all DDEML calls</figcaption>
 </figure>
 
-# CONCLUSION
+### CONCLUSION
 
 We looked in this chapter at IPC and some of its implementations in major operating systems. We then delved into DDE with theoretical and practical examples. 
 

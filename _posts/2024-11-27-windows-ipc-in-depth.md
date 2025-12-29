@@ -17,7 +17,7 @@ We immediately begin to see how much of the COM ecosystem is used just by keepin
 
 ---
 
-# INTRODUCTION
+### INTRODUCTION
 
 The *COM world* is thought to be obsolete and no longer used, but, as we will discover in this series, the truth is quite different.
 Through the understanding of such items as <span style="color: #b71c1c">__DDE__</span>, <span style="color: #b71c1c">__COM Objects__</span>, <span style="color: #b71c1c">__DCOM__</span>, <span style="color: #b71c1c">__ActiveX__</span>, <span style="color: #b71c1c">__OLE__</span> and <span style="color: #b71c1c">__MSRPC__</span>, you will attain a unified awareness of all these technologies at the end of this journey, from an *offensive* (which I like best) and why not, defensive perspective as well.
@@ -25,8 +25,8 @@ If you would then like to find 0day on the Office suite, welcome, know that much
 
 > <div style="display: table"><div style="display: table-cell; width: 10%; vertical-align: middle; text-align: center; padding-right: 10px"><div class="w-8 h-8 rounded-full" style="background-color: #3d5afe; font-size: 3.5em"></div> </div><div style="font-weight: 300; width: 90%; display: table-cell; vertical-align: middle; text-align: left;"><span class="rubik" style="font-weight: 300;">If you would like to accompany me, as if we were on an afternoon stroll, in having a chat and reflections, the introductory part of the course talks more about “philosophy” than “material technical notions.” If you enjoy discussing these theoretical topics as well, by all means read it. Otherwise you are free to skip to the initial technical chapter.</span></div></div>
 
-# GENERALIZATION AND ABSTRACTION
-### HISTORY
+### GENERALIZATION AND ABSTRACTION
+#### HISTORY
 
 Ever since Neolithic times, our ancestors have had the need (and thus the desire) to *“not exert too much effort”*. If we think about it, all technological progress starts from the desire to *“economize”* energy, to “create” methods and tools to be more productive with less effort.
 
@@ -68,7 +68,7 @@ We then used the pillars of our rational thinking, generalization and abstractio
 
 > <div style="display: table"><div style="display: table-cell; width: 10%; vertical-align: middle; text-align: center; padding-right: 10px"><div class="w-8 h-8 rounded-full" style="background-color: #ffd740; font-size: 3.5em"></div>  </div><div style="font-weight: 300; width: 90%; display: table-cell; vertical-align: middle; text-align: left;"><span class="rubik" style="font-weight: 300;">Beware, however, of early recognition of the various logical fallacies and biases arising from the desire to arrive quickly and with less effort at a solution.</span></div></div>
 
-### EVOLUTION
+#### EVOLUTION
 
 Over time these “unconscious” expedients have been brought to awareness and formalized.
 
@@ -102,7 +102,7 @@ Not to mention the emergence of programming paradigms more advanced than procedu
 
 ---
 
-### WINDOWS: FROM PROBLEM TO SOLUTION
+#### WINDOWS: FROM PROBLEM TO SOLUTION
 
 The solutions we will see in this series grew out of Microsoft's need to *find a method of inter-process communication that was “standard”*, that is, *one that guaranteed interoperability between programs written in different languages, modularity and reuse*.
 
@@ -126,8 +126,8 @@ Thus, the difficulties were:
 
 ---
 
-# TO BE CONTINUED
+### TO BE CONTINUED
 
 I know I have bored you with philosophical arguments, however, from the next post I will begin in a technical way to talk about __the most common IPC mechanisms__ and, later, the first solution devised by Microsoft Windows for this problem: <span style="color: #b71c1c">__Dynamic Data Exchange (DDE)__</span>.
 
-### STAY TUNED!
+##### STAY TUNED!
