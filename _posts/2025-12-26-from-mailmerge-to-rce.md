@@ -206,7 +206,7 @@ So, I came up, after googling and "ChatGPT-ing" a lot, with this particular SQL 
 SELECT * FROM [Excel 12.0 Xml;Database=arbitraryfile.xlsx].[Contacts];
 {% endhighlight %}
 
-This query, in short, **uses Excel ODBC Driver to load arbitraryfile.xlsx file**. If we closely look at *File Creation ProcMon events*, we can observe that file is created inside `C:\Program Files\Microsoft Office\root\Office16\ADDINS\Microsoft Power Query for Excel Integrated\bin`. 
+This query, in short, **uses Excel ODBC Driver to load arbitraryfile.xlsx file**. If we closely look at *File Creation ProcMon events*, we can observe that file is created inside `C:/Program Files/Microsoft Office/root/Office16/ADDINS/Microsoft Power Query for Excel Integrated/bin`. 
 
 <figure style="text-align: center; margin-bottom: 10px">
     <img src="{% vite_asset_path images/posts/2025-12-26-from-mailmerge-to-rce/Arbitrary-Write-4.png %}"
@@ -214,7 +214,7 @@ This query, in short, **uses Excel ODBC Driver to load arbitraryfile.xlsx file**
     <figcaption>CreateFile Event - surprise!</figcaption>
 </figure>
 
-In that time an insight sparkled in me: *I could try a Path Traversal* to place the created Excel file inside a special writable path like `C:\Users\Administrator\AppData\Roaming\Microsoft\Excel\XLSTART\` so that it will be opened automatically along with another Excel file. But another thing was missing: I really needed a way to control file content, in order to place a macro.
+In that time an insight sparkled in me: *I could try a Path Traversal* to place the created Excel file inside a special writable path like `C:/Users/Administrator/AppData/Roaming/Microsoft/Excel/XLSTART/` so that it will be opened automatically along with another Excel file. But another thing was missing: I really needed a way to control file content, in order to place a macro.
 
 ---
 
@@ -265,7 +265,7 @@ So, let's immediately put the pieces together!
 
 
 ### Part 4: fully working exploit
-Now, the plan is the following: first of all, **we write into an Excel table the maliciously crafted XML Word document with the evil macro**. Then, **we create another Word document**, that will be the "attack vector" the victim has to open, **with an ODBC connection that will write inside the Word Trusted Location the aforementioned XML Word file** (`C:\Users\Administrator\AppData\Roaming\Microsoft\Templates\`). **The same Word target file will reference the template it has just created as External Template**.
+Now, the plan is the following: first of all, **we write into an Excel table the maliciously crafted XML Word document with the evil macro**. Then, **we create another Word document**, that will be the "attack vector" the victim has to open, **with an ODBC connection that will write inside the Word Trusted Location the aforementioned XML Word file** (`C:/Users/Administrator/AppData/Roaming/Microsoft/Templates/`). **The same Word target file will reference the template it has just created as External Template**.
 
 So, long story short, here are the fully functional payloads:<br><br>
 
@@ -283,7 +283,7 @@ Provider=MSDASQL.1;Data Source=MS Access Database;Persist Security Info=False;In
 
 > <div style="display: table"><div style="display: table-cell; width: 10%; vertical-align: middle; text-align: center; padding-right: 10px"><div class="w-8 h-8 rounded-full" style="background-color: #ffd740; font-size: 3.5em"></div>  </div><div style="font-weight: 300; width: 90%; display: table-cell; vertical-align: middle; text-align: left;"><span class="rubik" style="font-weight: 300;">Why am I using OLEDB instead of ODBC? It's because, in this case, OLEDB is a wrapper around ODBC, but...more fine grained and customizable.</span></div></div>
 
-> <div style="display: table"><div style="display: table-cell; width: 10%; vertical-align: middle; text-align: center; padding-right: 10px"><div class="w-8 h-8 rounded-full" style="background-color: #ffd740; font-size: 3.5em"></div>  </div><div style="font-weight: 300; width: 90%; display: table-cell; vertical-align: middle; text-align: left;"><span class="rubik" style="font-weight: 300;"><code>FMT=Fixed;ColNameHeader=No;HDR=No;</code> are needed to not make ODBC prepend/append stuff before our actual data.</span></div></div>
+> <div style="display: table"><div style="display: table-cell; width: 10%; vertical-align: middle; text-align: center; padding-right: 10px"><div class="w-8 h-8 rounded-full" style="background-color: #ffd740; font-size: 3.5em"></div>  </div><div style="font-weight: 300; width: 90%; display: table-cell; vertical-align: middle; text-align: left;"><span class="rubik" style="font-weight: 300;"><code>FMT=Fixed;<br>ColNameHeader=No;<br>HDR=No;<br></code> are needed to not make ODBC prepend/append stuff before our actual data.</span></div></div>
 
 We have almost achieved an RCE! The only thing we need is the "R", so the attack can be performed remotely.
 We will leverage three interesting features, two from Office side, the other from Windows side:
@@ -372,6 +372,6 @@ Your browser does not support the video tag.
 
 ### Conclusion
 
-This attack chain is so far the best I've ever found, in my opinion. It leverages multiple vulnerabilities and I succesfully obtained Command Execution Remotely, even in a sthealth way, through Word and Access!
+This attack chain is so far the best I've ever found, in my opinion. It leverages multiple vulnerabilities and I succesfully obtained Command Execution Remotely, even in a stealthy way, through Word and Access!
 
 If you enjoyed this thorough blog post, please reach out to me, comment or...thumb up!
