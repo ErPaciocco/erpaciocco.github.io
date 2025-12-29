@@ -12,4 +12,5 @@ group :jekyll_plugins do
     gem "jekyll-include-cache"
     gem "jekyll-postcss-v2"
     gem "jekyll-vite"
+    gem "jekyll-toc"
 end

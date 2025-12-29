@@ -1,0 +1,191 @@
+---
+layout:     post
+title:      "All-in one Windows IPC Internals - IPC Mechanisms and DDE"
+subtitle:   "An overview to IPC technologies in Windows and UNIX Environments and DDE"
+date:       2024-12-12 14:00:00
+author:     "ErPaciocco"
+header-img: "/images/posts/2024-12-12-windows-ipc-in-depth-2/ddebackground.png"
+categories:  Windows
+color: blue
+---
+
+Here we are back in the second episode of our journey into __Windows IPCs__.
+Today we are going to talk about *the main mechanisms put in place by various OSs to achieve “IPC”, “Inter-Process Communication”*.
+
+# IPC FOUNDATIONS
+### Examples
+Very common in any OS is the need to exchange data between different applications and coordinate behaviors based on this. Here are some examples:
+
+<div class="my-4">
+<span style="font-size:13px; color: orange">#</span><b>1</b>. <span class="rubik">A Web server such as Apache or Nginx needs to communicate with CGI or FastCGI processes.</span>
+</div>
+
+<blockquote><div style="display: table"><div style="display: table-cell; width: 10%; vertical-align: middle; text-align: center; padding-right: 10px"><div class="w-8 h-8 rounded-full" style="background-color: #50c878; font-size: 3.5em"></div>  </div><div style="font-weight: 300; width: 90%; display: table-cell; vertical-align: middle; text-align: left;"><span class="rubik" style="font-weight: 300;">This detail is often overlooked, but <i style="color: orange">how do Apache and Nginx interface with PHP, which is a different executable and installed separately</i>? This is where IPC steps in:<br><br>
+<span class="rubik" style="font-weight: 200;">
+1. <span style="color: orange">The web server receives a request from a client for a PHP page</span>: it has to render it, but it does not know how to interpret the file instructions, being only a web server.<br>
+2. At this point then <span style="color: orange">the server sends, in turn, using a protocol called <b>FastCGI</b>, a request to a socket, and calls the PHP executable passing it</span> as a parameter the socket from which to take the request data.<br>
+3. <span style="color: orange"><b>PHP-FPM</b></span> listens on the specified socket (Unix or TCP) and, upon receiving the data, <span style="color: orange">assigns the job to one of its workers.</span><br>
+4. The <span style="color: orange">PHP worker interprets the file </span>(e.g., “index.php”) <span style="color: orange">and sends the response to the socket</span> from before<br>
+5. <span style="color: orange">Apache reads the FastCGI response from the socket</span> and sends the HTTP response with the page.</span></span></div></div></blockquote>
+
+<span style="font-size:13px; color: orange">#</span><b>2</b>. <span class="rubik">__UNIX daemons__ must monitor the status of services or receive requests from other processes</span>
+
+> <div style="display: table"><div style="display: table-cell; width: 10%; vertical-align: middle; text-align: center; padding-right: 10px"><div class="w-8 h-8 rounded-full" style="background-color: #50c878; font-size: 3.5em"></div> </div><div style="font-weight: 300; width: 90%; display: table-cell; vertical-align: middle; text-align: left;"><span class="rubik" style="font-weight: 300;">Interesting here is the distinction between <b>Unix Domain Socket</b> and <b>Internet Socket</b>: the former works and is accessible only locally, on the same machine. The second is designed for networked data transfers.</span></div></div>
+
+<span style="font-size:13px; color: orange">#</span><b>3</b>. <span class="rubik">__PIPE__ operator needs to transfer data, for example, from `ps` to `grep`</span>
+
+<span style="font-size:13px; color: orange">#</span><b>4</b>. <span class="rubik">Desktop environments such as __GNOME__ or __KDE__ must communicate with graphics servers (such as __X11__ or Wayland)</span>
+
+> <div style="display: table"><div style="display: table-cell; width: 10%; vertical-align: middle; text-align: center; padding-right: 10px"><div style="display: table-cell; width: 10%; vertical-align: middle; text-align: center; padding-right: 10px"><div class="w-8 h-8 rounded-full" style="background-color: #ffd740; font-size: 3.5em"></div> </div><div style="font-weight: 300; width: 90%; display: table-cell; vertical-align: middle; text-align: left;"><span class="rubik" style="font-weight: 300;">Recall the previous post: through generalization and abstraction it comes naturally to <i>group entities by common characteristics</i>. Hence the need for modularity and reuse in the programming environment.</span></div></div>
+
+> <div style="display: table"><div style="display: table-cell; width: 10%; vertical-align: middle; text-align: center; padding-right: 10px"><div class="w-8 h-8 rounded-full" style="background-color: #50c878; font-size: 3.5em"></div> </div><div style="font-weight: 300; width: 90%; display: table-cell; vertical-align: middle; text-align: left;"><span class="rubik" style="font-weight: 300;">GNOME/KDE and X11 are at different levels in the architecture of a graphical system: <br><br><span style="font-weight:200">- <span style="color: orange"><b>GNOME</b>/<b>KDE</b></span> are <span style="color: orange">desktop environments</span>, that is, they provide facilities for an easy and intuitive desktop experience, such as window management and graphical effects;<br>- <span style="color: orange"><b>X11</b></span> is a <span style="color: orange">graphics server</span> that interfaces with hardware for basic graphics operations.</span></span></div></div>
+
+### Types
+
+This non-exhaustive list highlights the most common OS mechanisms for IPC:
+
+<span style="font-size:13px; color: orange">#</span> <b style="color: yellow">Signals</b><br>Present natively only in POSIX environments, these are precisely __asynchronous signals__ transmitted __from one process to another__. These signals typically contain *no auxiliary data*, are generated under specific hardware or software conditions, and are typically checked at each kernel-to-user mode transition after system calls, or when a process is in a suspended state.
+Examples are: `SIGABRT`, `SIGSEGV`, `SIGHUP`, `SIGBUS`, `SIGKILL`, etc.
+
+<span style="font-size:13px; color: orange">#</span> <b style="color: yellow">Pipes</b><br>Available in both POSIX and Windows systems, they allow __one-way communication between processes__. They can be __anonymous__ or __named__.
+
+> <div style="display: table"><div style="display: table-cell; width: 10%; vertical-align: middle; text-align: center; padding-right: 10px"><div class="w-8 h-8 rounded-full" style="background-color: #50c878; font-size: 3.5em"></div> </div><div style="font-weight: 300; width: 90%; display: table-cell; vertical-align: middle; text-align: left;"><span class="rubik" style="font-weight: 300;">Although they may seem bidirectional, Pipes actually open <b>two file descriptors</b>, one read and one write.</span></div></div>
+
+<span style="font-size:13px; color: orange">#</span> <b style="color: yellow">Message Queues/Loops</b><br>Used especially in Windows in window management in graphical interfaces, they work by __continuously populating and extracting messages from a shared buffer__, and executing, depending on the type of message, the appropriate handlers (e.g. `WM_MOUSEMOVE` for when moving the mouse within a window).
+
+<span style="font-size:13px; color: orange">#</span> <b style="color: yellow">MailSlots</b><br>Available in both POSIX and Windows, allow __one-way communication between clients and mailslot servers__. Clients write a message to a server, these are added to a message buffer, and remain until a client reads them.
+
+<span style="font-size:13px; color: orange">#</span> <b style="color: yellow">Clipboard</b><br>These are a __very weakly coupled medium of exchange__ found in Windows and POSIX, meaning that the application “copying” the data chooses the format of it itself, and the receiver must accept and interpret it.
+
+# DDE
+
+In this scenario is located Microsoft's DDE technology: <b style="color: yellow">Dynamic Data Exchange</b>.
+
+DDE provides a way to *send data between applications*, *using both the Windows Message Queues* mechanism we saw earlier *and shared memory*, according to a specific protocol (DDE Protocol). Since it has a message-based architecture, __DDE conversations can only take place between windows__, whether visible or hidden.
+
+### Overview
+
+DDE uses a hierarchy of 3 names to retrieve as much specific information as possible: __SERVICE__, __TOPIC__, and __ITEM__. At the beginning of a conversation, the DDE client sends a broadcast message to all windows containing the “service/topic” pair (also called CHANNEL) about which it wants information. The first window (called __SERVER__) that accepts establishes a connection with the client.
+
+> <div style="display: table"><div style="display: table-cell; width: 10%; vertical-align: middle; text-align: center; padding-right: 10px"><div class="w-8 h-8 rounded-full" style="background-color: #50c878; font-size: 3.5em"></div> </div><div style="font-weight: 300; width: 90%; display: table-cell; vertical-align: middle; text-align: left;"><span class="rubik" style="font-weight: 300;">You can also use <b>WILDCONNECT</b>, meaning you can leave topics and services empty and all DDE servers will be able to respond.</span></div></div>
+
+DDE messages, once the connection is established, can be:
+<div style="padding-left: 1em; line-height:1.6; font-size: 16px">
+
+<span style="font-size:13px; color: orange">#</span><b style="color: gold">ACK</b>: used to notify “the other DDE end” of the arrival and successful (or unsuccessful) processing of another message<br>
+
+<span style="font-size:13px; color: orange">#</span><b style="color: gold">TERMINATE</b>: used to terminate a conversation<br>
+
+<span style="font-size:13px; color: orange">#</span><b style="color: gold">ADVISE/NOTIFY</b>:  used to get updates whenever the target of the DDE conversation changes state (a so-called <b>DATA LINK</b> is created, which can be <i>WARM</i> and <i>HOT</i>. In a warm data link the server notifies the client whenever the target item changes but does not send its updated content, in a hot data link the updated content is always sent along with the notification)<br>
+
+<span style="font-size:13px; color: orange">#</span><b style="color: gold">REQUEST</b>: used to retrieve messages from the server<br>
+
+<span style="font-size:13px; color: orange">#</span><b style="color: gold">UNADVISE</b>: used to inform the DDE server that it does not want to have any more updates on the target item<br>
+
+<span style="font-size:13px; color: orange">#</span><b style="color: gold">DATA</b>: used to send a data item between client and server<br>
+
+<span style="font-size:13px; color: orange">#</span><b style="color: gold">EXECUTE</b>: used to send commands to the server<br>
+
+<span style="font-size:13px; color: orange">#</span><b style="color: gold">POKE</b>: used to send additional data to the server<br>
+
+</div>
+
+> <div style="display: table"><div style="display: table-cell; width: 10%; vertical-align: middle; text-align: center; padding-right: 10px"><div class="w-8 h-8 rounded-full" style="background-color: #50c878; font-size: 3.5em"></div> </div><div style="font-weight: 300; width: 90%; display: table-cell; vertical-align: middle; text-align: left;"><span class="rubik" style="font-weight: 300;">Notable features of DDE technology are as follows:<br>
+ - <span class="rubik" style="font-weight: 200;"><b>DDE is asynchronous</b>: if the client does not receive a response for a specified period of time, it goes into timeout.</span><br>
+ - <span class="rubik" style="font-weight: 200;">The names SERVICE, TOPIC and ITEM are <b>case-insensitive</b> because they use instances of Global String Atoms.</span><br>
+- <span class="rubik" style="font-weight: 200;">A <b>DDE server can also act as a client</b> in the same conversation, and a DDE client can likewise act as a server</span><br></span></div></div>
+
+### Theoretical Example
+
+One scenario in which DDE can be useful is when a Microsoft Excel sheet wants to constantly update the data in one of its tables. Let's say we have a “Players” sheet with a table containing some of the most famous soccer players with the number of goals scored next to it. To keep this table constantly updated, we can take advantage of a DDE conversation between a client (our Excel) and a server (e.g., a local program named “Statistics” containing all the updated statistics).
+
+Here is an example flow:
+
+<div style="padding-left: 1em; line-height:1.8; font-size: 16px; font-weight: 200">
+<div><span style="font-size:20px">1.</span> The client starts the conversation by sending a WM_DDE_INITIATE message in broadcast to all windows</div>
+<div><span style="font-size:20px">2.</span> The DDE server returns positive WM_DDE_ACK and the connection between client and server is established. The client stores the handle of the responding window for subsequent communication.</div>
+<div><span style="font-size:20px">3.</span> The client requests a data element from the server by sending a message of type WM_DDE_REQUEST, or sends a data element to the server with a WM_DDE_POKE message.</div>
+<div><span style="font-size:20px">4.</span> In the case of WM_DDE_REQUEST, the server allocates the response and sends it in the WM_DDE_DATA message.</div>
+<div><span style="font-size:20px">5.</span> Again in the case of WM_DDE_REQUEST, the client notifies the server of the successful receipt of data with positive WM_DDE_ACK.</div>
+<div><span style="font-size:20px">6.</span> The client or server issues a WM_DDE_TERMINATE message to terminate the conversation.</div>
+</div>
+
+<blockquote><div style="display: table"><div style="display: table-cell; width: 10%; vertical-align: middle; text-align: center; padding-right: 10px"><div class="w-8 h-8 rounded-full" style="background-color: #50c878; font-size: 3.5em"></div> </div><div style="font-weight: 300; width: 90%; display: table-cell; vertical-align: middle; text-align: left;"><span class="rubik" style="font-weight: 300;">See these guides for more details:<br>
+ - <span class="rubik" style="font-weight: 200;"><a href="https://www.angelfire.com/biz/rhaminisys/ddeinfo.html">https://www.angelfire.com/biz/rhaminisys/ddeinfo.html</a></span><br>
+ - <span class="rubik" style="font-weight: 200;"><a href="https://learn.microsoft.com/it-it/windows/win32/dataxchg/dynamic-data-exchange">https://learn.microsoft.com/it-it/windows/win32/dataxchg/dynamic-data-exchange</a></span><br></span></div></div></blockquote>
+
+---
+
+### Practical Example: DDE + PYTHON + ACCESS
+
+For this practical example we will use the features of *PyWin32*, which, among other things, supports the creation and management of DDE conversations, to interact with Microsoft Access.
+
+> <div style="display: table"><div style="display: table-cell; width: 10%; vertical-align: middle; text-align: center; padding-right: 10px"><i class="fa-solid fa-lightbulb" style="color: #ffd740; font-size: 4em"></i> </div><div style="font-weight: 300; width: 90%; display: table-cell; vertical-align: middle; text-align: left;"><span class="rubik" style="font-weight: 300;">I use Microsoft Access specifically because it is still the only one that actively supports DDE. In Word the DDE features are completely disabled, in Excel partially.</span></div></div>
+
+First, let's create an Access .accdb database, and, within it, create a dummy table named “Address Book” with the columns “First Name,” “Last Name,” and “Address” of type “Text” inside; let's then populate it with a few entries.
+
+<figure style="text-align: center">
+    <img src="{% vite_asset_path images/posts/2024-12-12-windows-ipc-in-depth-2/addressbook.png %}"
+         alt="Address Book Table">
+    <figcaption>"Address Book" table in Access</figcaption>
+</figure>
+
+At this point, we do not close Access (*remember? DDE interacts with windows*) and install the PyWin32 suite in our Python3 via “pip”:
+`pip install pywin32`
+
+Then we create a file (I'll call it `ddexec.py`) and insert the following snippet:
+
+<pre><code class="language-py">
+import win32ui
+import dde
+
+def execute_dde_query(database_name, query_name):
+    try:
+        # Create DDE Server (i know, it should be DDEClient but pywin32 specs have defined it in this way instead)
+        server = dde.CreateServer()
+        server.Create("MyDDEClient")
+        
+        # DDE: Create Conversation
+        conversation = dde.CreateConversation(server)
+        # DDE: Connect with SERVICE(MSACCESS) + TOPIC(DB; SQL QUERY)
+        conversation.ConnectTo("MSACCESS", f"{database_name};SQL {query_name}")
+        
+        # DDE: Item
+        dde_command = "All"
+        # Send DDE Request
+        response = conversation.Request(dde_command)
+        
+        # Print DDE Response
+        print("DDE Response:\n", response)
+        
+    except Exception as e:
+        print("Error:", e)
+    finally:
+        # Close DDE Connection
+        server.Destroy()
+
+# Usage example
+execute_dde_query("<<Full .accdb Path>>", "SELECT * FROM [Address Book]")
+</code></pre>
+
+Let's run it and see DDE in action:
+
+<figure style="text-align: center">
+    <img src="{% vite_asset_path images/posts/2024-12-12-windows-ipc-in-depth-2/PythonOutput.png %}"
+         alt="Address Book Table">
+    <figcaption>Python DDE script output</figcaption>
+</figure>
+
+For a more detailed understanding of the DDE message flow with related implementations and structure populating, I refer you to the Microsoft documentation: <a href="https://learn.microsoft.com/en-us/windows/win32/api/_dataxchg/">Microsoft DDE APIs.</a>
+
+<figure style="text-align: center">
+    <img src="{% vite_asset_path images/posts/2024-12-12-windows-ipc-in-depth-2/DDEApiMonitor.png %}"
+         alt="DDE in action">
+    <figcaption>API Monitor v2 showing us all DDEML calls</figcaption>
+</figure>
+
+# CONCLUSION
+
+We looked in this chapter at IPC and some of its implementations in major operating systems. We then delved into DDE with theoretical and practical examples. 
+
+*See you in the next chapter of this series, where we will delve deeper and deeper into the COM world.*

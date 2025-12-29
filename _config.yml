@@ -126,6 +126,7 @@ markdown: kramdown
 kramdown:
   input: GFM
   syntax_highlighter: rouge
+  gfm_quirks: [paragraph_end]
 highlighter: rouge
 permalink: pretty
 
@@ -162,6 +163,7 @@ plugins:
   - jekyll-sitemap
   - jekyll-include-cache
   - jekyll-postcss-v2
+  - jekyll-toc
 
 postcss:
   cache: false
@@ -169,3 +171,10 @@ postcss:
 sass:
   style: compressed
   sourcemap: never
+
+toc:
+ min_level: 1
+ max_level: 3
+ list_class: toc
+ list_class: toc__list
+ sublist_class: toc__sublist

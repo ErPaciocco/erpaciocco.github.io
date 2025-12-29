@@ -5,10 +5,13 @@
             <article>
                 <div id="post" class="">
                     <div class="w-full flex flex-col justify-center items-center">
-                        <div> <img class="rounded-xl text-center" :src="imagesMap[post['header-img']]" alt="Post Image" /></div>
+                        <div> <img class="rounded-xl text-center" :src="imagesMap[post['header-img']]"
+                                alt="Post Image" /></div>
                         <div class="w-full max-w-5xl">
                             <div class="m-4 rubik text-primary-light font-light md:text-xl text-lg">
-                                <VueMarkdown :markdown="post.content" :rehype-plugins="[rehypeRaw, rehypeHighlight]"
+                                <Toc v-if="post.toc" />
+                                <VueMarkdown :markdown="post.content"
+                                    :rehype-plugins="[rehypeRaw, rehypeHighlight, remarkGfm]"
                                     :custom-attrs="customAttrs">
                                 </VueMarkdown>
                             </div>
@@ -42,13 +45,15 @@ import rehypeRaw from 'rehype-raw';
 import rehypeHighlight from 'rehype-highlight';
 import { ref } from 'vue';
 import { Transition } from 'vue'
+import remarkGfm from 'remark-gfm';
+import Toc from './Partials/Toc.vue';
 
 const images = import.meta.glob('@/images/posts/**/*.{jpg,jpeg,png,gif,webp}', { eager: true });
 
 const imagesMap = ref({});
 for (const path in images) {
-  const fileName = path
-  imagesMap.value[fileName] = images[path].default;
+    const fileName = path
+    imagesMap.value[fileName] = images[path].default;
 }
 
 
@@ -61,19 +66,22 @@ fetch('/posts.json')
     })
 
 const customAttrs = {
-    h1: { class: 'text-4xl font-bold my-4 text-primary-light' },
-    h2: { class: 'text-3xl font-semibold my-3 text-primary-light' },
-    h3: { class: 'text-2xl font-medium my-2 text-primary-light' },
+    h1: { class: 'text-5xl font-bold my-4 text-primary-light' },
+    h2: { class: 'text-4xl font-semibold my-3 text-primary-light' },
+    h3: { class: 'text-3xl font-medium my-2 text-primary-light' },
+    h4: { class: 'text-2xl font-medium my-2 text-primary-light' },
     img: { class: 'rounded-lg mx-auto mt-4 shadow-lg' },
-    table: { class: 'table-auto w-full my-4 border-collapse border border-gray-700' },
+    table: { class: 'w-full my-4 border-collapse px-4 overflow-x-auto block md:table' },
+    th: { class: 'border-b-4 border-gray-200 px-4 py-2 text-left' },
+    tr: { class: 'even:bg-gray-800 even:bg-opacity-50' },
     hr: { class: 'border-t border-gray-700 my-4' },
     a: { class: 'text-blue-500 hover:underline wrap-break-word' },
     strong: { class: 'font-bold text-orange-300' },
     em: { class: 'italic text-gray-400' },
-    figcaption: { class: 'text-sm text-gray-500 mb-4' },
+    figcaption: { class: 'text-sm text-gray-300 mb-4' },
     pre: { class: 'py-4 overflow-auto' },
-    code: { class: 'text-sm hljs rounded-xl wrap-break-word' },
-    blockquote: { class: 'border-l-4 border-gray-700 pl-4 italic my-8' }
+    blockquote: { class: 'border-l-4 border-gray-700 pl-4 italic my-8' },
+    li: { class: 'my-2 before:content-["●"] before:text-white before:mr-2' }
 };
 
 const props = defineProps({

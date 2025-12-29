@@ -4,6 +4,7 @@ module.exports = {
     './_layouts/**/*.html',
     './_posts/*.md',
     './*.html',
+    './_frontend/components/**/*.vue'
   ],
   theme: {
     extend: {}
